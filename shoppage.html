@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bookory - All Books</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!-- Google Fonts: Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --accent-orange: #FF6600;
+            --dark-text: #2c3e50;
+            --secondary-text-color: #6c757d;
+            --card-bg: #ffffff;
+            --bg-light: #f8f9fa;
+            --star-color: #ffc107;
+            --border-color: #e9ecef;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--dark-text);
+        }
+
+        .text-primary { color: var(--accent-orange) !important; }
+        .btn-primary { background-color: var(--accent-orange); border-color: var(--accent-orange); --bs-btn-hover-bg: #e65c00; --bs-btn-hover-border-color: #e65c00; }
+        .navbar-brand { font-weight: 700; font-size: 1.5rem; }
+        .main-content-area { padding: 30px 0; }
+        
+        /* Filter Sidebar Styling */
+        .filter-sidebar { background-color: var(--card-bg); border-radius: 8px; padding: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); margin-bottom: 30px; }
+        .filter-sidebar h4 { font-size: 1.3rem; font-weight: 700; margin-bottom: 20px; position: relative; padding-bottom: 10px; }
+        .filter-sidebar h4::after { content: ''; position: absolute; left: 0; bottom: 0; width: 40px; height: 3px; background-color: var(--accent-orange); border-radius: 5px; }
+        .filter-option-group { margin-bottom: 25px; }
+        .filter-option-group h5 { font-size: 1rem; font-weight: 600; margin-bottom: 12px; }
+        .filter-option-group .form-check-label { font-size: 0.9rem; }
+        .filter-option-group .form-check-input:checked { background-color: var(--accent-orange); border-color: var(--accent-orange); }
+        .price-range-display { font-weight: 600; margin-top: 10px; font-size: 0.95rem; }
+        .rating-filter a { text-decoration: none; color: var(--secondary-text-color); }
+        .rating-filter a.active, .rating-filter a:hover { color: var(--accent-orange); }
+        .rating-filter .bi-star-fill { color: var(--star-color); }
+        
+        /* Listing Controls (Sort by, View Toggle) */
+        .listing-controls { background-color: var(--card-bg); border-radius: 8px; padding: 15px 20px; margin-bottom: 25px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+
+        /* Book Card General Styles */
+        a.book-link { text-decoration: none; color: inherit; }
+        .product-card-listing { transition: transform 0.2s ease, box-shadow 0.2s ease; border: 1px solid #eee; border-radius: 8px; overflow: hidden; background-color: var(--card-bg); height: 100%; display: flex; }
+        .product-card-listing:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .book-actions .btn { font-size: 0.8rem; padding: 0.3rem 0.6rem; }
+        .btn-wishlist { background-color: rgba(255, 255, 255, 0.8); border-radius: 50%; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; text-decoration: none; color: var(--dark-text); transition: all 0.2s ease; border:none; }
+        .btn-wishlist:hover { transform: scale(1.1); }
+        .btn-wishlist.active { color: var(--accent-orange); }
+
+        /* Grid View Specific Styles */
+        .grid-view .product-card-listing { flex-direction: column; text-align: center; }
+        .grid-view .book-image-container { position: relative; width: 100%; height: 350px; display: flex; align-items: center; justify-content: center; background-color: #e9ecef; }
+        .grid-view .book-cover-img { width: 100%; height: 100%; object-fit: cover; }
+        .grid-view .btn-wishlist { position: absolute; top: 10px; right: 10px; z-index: 2;}
+        .grid-view .card-body { padding: 15px; flex-grow: 1; display: flex; flex-direction: column; }
+        .grid-view .card-title { font-weight: 600; font-size: 1rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .grid-view .card-subtitle { font-size: 0.85rem; color: var(--secondary-text-color); }
+        .grid-view .price { font-weight: 700; color: var(--accent-orange); font-size: 1.1rem; margin: 0.5rem 0; margin-top: auto; }
+        
+        /* List View Specific Styles */
+        .list-view .product-card-listing { flex-direction: row; align-items: stretch; min-height: 220px; }
+        .list-view .book-image-container { position: relative; width: 180px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; background-color: #e9ecef; }
+        .list-view .book-cover-img { width: 100%; height: 100%; object-fit: cover; }
+        .list-view .btn-wishlist { position: absolute; top: 10px; right: 10px; z-index: 2;}
+        .list-view .card-body { padding: 20px; text-align: left; flex-grow: 1; display: flex; flex-direction: column; }
+        .list-view .card-title { font-size: 1.25rem; font-weight: 600; }
+        .list-view .card-subtitle { font-size: 1rem; color: var(--secondary-text-color); margin-bottom: 10px; }
+        .list-view .description { font-size: 0.9rem; margin-bottom: 15px; }
+        .list-view .price-actions-wrapper { margin-top: auto; }
+        .list-view .price { font-size: 1.5rem; font-weight: 600; color: var(--accent-orange); }
+
+        /* Out of Stock Overlay */
+        .out-of-stock-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(248, 249, 250, 0.9); /* More opaque */
+            color: var(--dark-text);
+            font-weight: 700;
+            font-size: 1.2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            z-index: 1;
+            backdrop-filter: blur(2px);
+        }
+        .out-of-stock-overlay .bi {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        /* Custom disabled button style */
+        .btn-primary:disabled {
+            background-color: var(--secondary-text-color);
+            border-color: var(--secondary-text-color);
+            opacity: 0.65;
+        }
+
+        /* Footer */
+        .footer-section { background-color: #2c3e50; color: #ecf0f1; padding: 3rem 0; }
+        .footer-bottom { background-color: #233140; padding: 1rem 0; border-top: 1px solid #34495e; }
+
+    </style>
+</head>
+<body>
+
+    <!-- UNIFIED HEADER -->
+    <header class="bg-white sticky-top shadow-sm">
+        <nav class="navbar navbar-expand-lg">
+            <div class="container-fluid px-md-4">
+                <a class="navbar-brand text-primary me-4" href="homepage.html">Bookory</a>
+                <form class="d-flex flex-grow-1" role="search" onsubmit="return false;">
+                    <div class="input-group">
+                        <span class="input-group-text bg-light border-end-0"><i class="bi bi-search"></i></span>
+                        <input class="form-control border-start-0" type="search" id="headerSearchInput" placeholder="Search for Books, Authors...">
+                    </div>
+                </form>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar"><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="mainNavbar">
+                    <ul class="navbar-nav ms-auto d-flex align-items-center">
+                        <li class="nav-item login-nav-item">
+                            <a href="login.html" class="btn btn-primary mx-2">Login</a>
+                        </li>
+                        <li class="nav-item dropdown d-none user-nav-item" id="user-dropdown">
+                            <a class="nav-link dropdown-toggle fw-medium" href="#" role="button" data-bs-toggle="dropdown"><i class="bi bi-person-circle me-1"></i> User</a>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li><a class="dropdown-item" href="myprofile.html"><i class="bi bi-person me-2"></i> My Profile</a></li>
+                                <li><a class="dropdown-item" href="orders.html"><i class="bi bi-box-seam me-2"></i> Orders</a></li>
+                                <li><a class="dropdown-item" href="wishlist.html"><i class="bi bi-heart me-2"></i> Wishlist</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="#" id="logout-link"><i class="bi bi-box-arrow-right me-2"></i> Logout</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item"><a class="nav-link fw-medium" href="wishlist.html"><i class="bi bi-heart me-1"></i> Wishlist</a></li>
+                        <li class="nav-item"><a class="nav-link fw-medium" href="cart.html"><i class="bi bi-cart3 me-1"></i> Cart</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="main-content-area container">
+        <div class="row g-4">
+            <!-- UNIFIED FILTER SIDEBAR -->
+            <div class="col-lg-3">
+                <aside class="filter-sidebar">
+                    <h4>Filter Options</h4>
+                    <div class="filter-option-group">
+                        <h5>Category</h5>
+                        <div id="category-filters">
+                            <!-- Categories will be dynamically inserted here -->
+                        </div>
+                    </div>
+                    <div class="filter-option-group">
+                        <h5>Price Range</h5>
+                        <input type="range" class="form-range" min="0" max="100" value="100" id="priceRange">
+                        <p class="price-range-display text-center">Price: ₹0 - ₹100</p>
+                    </div>
+                    <div class="filter-option-group">
+                        <h5>Customer Rating</h5>
+                        <div class="rating-filter">
+                            <a href="#" class="d-block" data-rating="4"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star"></i> & Up</a>
+                            <a href="#" class="d-block" data-rating="3"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star"></i><i class="bi bi-star"></i> & Up</a>
+                            <a href="#" class="d-block" data-rating="0">Any Rating</a>
+                        </div>
+                    </div>
+                    <div class="filter-option-group">
+                        <div class="form-check form-switch"><input class="form-check-input" type="checkbox" role="switch" id="includeOOS"><label class="form-check-label" for="includeOOS">Include Out of Stock</label></div>
+                    </div>
+                </aside>
+            </div>
+
+            <!-- UNIFIED MAIN CONTENT -->
+            <div class="col-lg-9">
+                <div class="listing-controls d-flex justify-content-between align-items-center">
+                    <div id="results-count" class="text-muted"></div>
+                    <div class="d-flex align-items-center gap-3">
+                        <select class="form-select form-select-sm" id="sort-by">
+                            <option value="popularity">Popularity</option>
+                            <option value="price-asc">Price: Low to High</option>
+                            <option value="price-desc">Price: High to Low</option>
+                            <option value="rating">Customer Rating</option>
+                        </select>
+                        <div class="btn-group" role="group">
+                            <button type="button" class="btn btn-outline-secondary view-toggle active" data-view="grid"><i class="bi bi-grid-fill"></i></button>
+                            <button type="button" class="btn btn-outline-secondary view-toggle" data-view="list"><i class="bi bi-list-task"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- IMPROVED GRID LAYOUT -->
+                <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4 g-4 grid-view" id="products-list-container">
+                    <!-- Products will be dynamically loaded here -->
+                </div>
+                
+                <nav class="mt-4">
+                    <ul class="pagination justify-content-center" id="pagination-controls"></ul>
+                </nav>
+            </div>
+        </div>
+    </main>
+    
+    <!-- UNIFIED FOOTER -->
+    <footer class="footer-section mt-5">
+        <div class="container">
+             <div class="row">
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h5>About Bookory</h5>
+                    <p class="text-white-50">Your one-stop shop for all the books you love. Discover new worlds and adventures with our vast collection.</p>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="homepage.html">Home</a></li>
+                        <li><a href="shoppage.html">Shop</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h5>Contact Us</h5>
+                    <ul class="list-unstyled text-white-50">
+                        <li><i class="bi bi-geo-alt-fill me-2"></i>123 Book Lane, Readville</li>
+                        <li><i class="bi bi-telephone-fill me-2"></i>(123) 456-7890</li>
+                        <li><i class="bi bi-envelope-fill me-2"></i>support@bookory.com</li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <h5>Newsletter</h5>
+                     <p class="text-white-50">Subscribe for the latest updates.</p>
+                    <form>
+                        <div class="input-group">
+                            <input type="email" class="form-control" placeholder="Your email address">
+                            <button class="btn btn-primary" type="button">Subscribe</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <div class="footer-bottom text-center text-secondary">
+        <p class="mb-0">&copy; 2025 Bookory. All Rights Reserved.</p>
+    </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+    $(document).ready(function() {
+        // --- DATA SOURCE ---
+        let allBooks = [];
+
+        // --- GLOBAL STATE ---
+        let currentView = 'grid';
+        let currentPage = 1;
+        const booksPerPage = 12;
+
+        // --- GENERATE DYNAMIC BOOK DATA ---
+        function generateBooks() {
+            const categories = ["Fiction", "Science Fiction", "Thriller", "Biography", "Fantasy", "History", "Romance", "Mystery"];
+            const bookData = [
+                { title: "To Kill a Mockingbird", author: "Harper Lee", image: "https://m.media-amazon.com/images/I/81a4kCNuH+L._AC_UF1000,1000_QL80_.jpg" },
+                { title: "1984", author: "George Orwell", image: "https://m.media-amazon.com/images/I/71rpa1-hAwL._AC_UF1000,1000_QL80_.jpg" },
+                { title: "The Great Gatsby", author: "F. Scott Fitzgerald", image: "https://m.media-amazon.com/images/I/71FTb9X6wsL._AC_UF1000,1000_QL80_.jpg" },
+                { title: "Pride and Prejudice", author: "Jane Austen", image: "https://m.media-amazon.com/images/I/71Q1tPupKjL._AC_UF1000,1000_QL80_.jpg" },
+                { title: "The Catcher in the Rye", author: "J.D. Salinger", image: "https://m.media-amazon.com/images/I/91HPG31dTwL._AC_UF1000,1000_QL80_.jpg" },
+                { title: "The Lord of the Rings", author: "J.R.R. Tolkien", image: "https://m.media-amazon.com/images/I/71jLBXtWJWL._AC_UF1000,1000_QL80_.jpg" },
+                { title: "The Hobbit", author: "J.R.R. Tolkien", image: "https://m.media-amazon.com/images/I/710+HcoP38L._AC_UF1000,1000_QL80_.jpg" },
+                { title: "The Alchemist", author: "Paulo Coelho", image: "https://m.media-amazon.com/images/I/71aG+xDKSYL._AC_UF1000,1000_QL80_.jpg" },
+                { title: "The Chronicles of Narnia", author: "C.S. Lewis", image: "https://m.media-amazon.com/images/I/81f2ax+O9+L._AC_UF1000,1000_QL80_.jpg" },
+                { title: "The Da Vinci Code", author: "Dan Brown", image: "https://m.media-amazon.com/images/I/81jOT9aLpSL._AC_UF1000,1000_QL80_.jpg" },
+                { title: "Fahrenheit 451", author: "Ray Bradbury", image: "https://m.media-amazon.com/images/I/71OFqSRFDgL._AC_UF1000,1000_QL80_.jpg" },
+                { title: "Brave New World", author: "Aldous Huxley", image: "https://m.media-amazon.com/images/I/81zE42gT3xL._AC_UF1000,1000_QL80_.jpg" },
+                { title: "Moby Dick", author: "Herman Melville", image: "https://m.media-amazon.com/images/I/81v5wp2zeGL._AC_UF1000,1000_QL80_.jpg" },
+                { title: "War and Peace", author: "Leo Tolstoy", image: "https://m.media-amazon.com/images/I/711c-D03k+L._AC_UF1000,1000_QL80_.jpg" },
+                { title: "The Shining", author: "Stephen King", image: "https://m.media-amazon.com/images/I/81c+k+3myLL._AC_UF1000,1000_QL80_.jpg" }
+            ];
+
+            const titlePrefixes = ["The", "A", "One", "Last", "First", "Chronicles of the"];
+            const titleAdjectives = ["Silent", "Hidden", "Forgotten", "Lost", "Final", "Crystal", "Golden", "Iron", "Shadow", "Burning", "Whispering"];
+            const titleNouns = ["Garden", "Throne", "River", "Castle", "Voyage", "Secret", "Legacy", "Key", "Star", "Crown", "Blade", "Heart"];
+
+            for (let i = 1; i <= 200; i++) {
+                const bookInfo = bookData[(i - 1) % bookData.length];
+                const randomPrefix = titlePrefixes[Math.floor(Math.random() * titlePrefixes.length)];
+                const randomAdjective = titleAdjectives[Math.floor(Math.random() * titleAdjectives.length)];
+                const randomNoun = titleNouns[Math.floor(Math.random() * titleNouns.length)];
+
+                allBooks.push({
+                    id: i,
+                    title: i > bookData.length ? `${randomPrefix} ${randomAdjective} ${randomNoun}` : bookInfo.title,
+                    author: bookInfo.author,
+                    category: categories[i % categories.length],
+                    price: parseFloat((Math.random() * (80 - 10) + 10).toFixed(2)),
+                    rating: parseFloat((Math.random() * (5 - 2.5) + 2.5).toFixed(1)),
+                    popularity: Math.floor(Math.random() * 100),
+                    inStock: Math.random() > 0.2, // 80% chance of being in stock
+                    imageUrl: bookInfo.image,
+                    description: "A brief description of the book goes here, enticing the reader to click and learn more about this wonderful story."
+                });
+            }
+        }
+        
+        // --- DYNAMICALLY POPULATE CATEGORY FILTERS ---
+        function populateCategoryFilters() {
+            const categories = [...new Set(allBooks.map(book => book.category))].sort();
+            const container = $('#category-filters');
+            container.empty();
+            categories.forEach(cat => {
+                const catId = `cat_${cat.toLowerCase().replace(/\s/g, '')}`;
+                container.append(`
+                    <div class="form-check">
+                        <input class="form-check-input filter-checkbox" type="checkbox" value="${cat}" id="${catId}">
+                        <label class="form-check-label" for="${catId}">${cat}</label>
+                    </div>`);
+            });
+        }
+        
+        // --- RENDER BOOKS (CORE FUNCTION) ---
+        function renderBooks() {
+            const searchTerm = $('#headerSearchInput').val().toLowerCase();
+            const maxPrice = parseFloat($('#priceRange').val());
+            const minRating = parseFloat($('.rating-filter a.active').data('rating') || 0);
+            const includeOOS = $('#includeOOS').is(':checked');
+            const selectedCategories = $('.filter-checkbox:checked').map((_, el) => $(el).val()).get();
+            const sortBy = $('#sort-by').val();
+
+            let filteredBooks = allBooks.filter(book => {
+                const searchMatch = book.title.toLowerCase().includes(searchTerm) || book.author.toLowerCase().includes(searchTerm);
+                const priceMatch = book.price <= maxPrice;
+                const ratingMatch = book.rating >= minRating;
+                const stockMatch = includeOOS || book.inStock;
+                const categoryMatch = selectedCategories.length === 0 || selectedCategories.includes(book.category);
+                return searchMatch && priceMatch && ratingMatch && stockMatch && categoryMatch;
+            });
+            
+            filteredBooks.sort((a, b) => {
+                switch (sortBy) {
+                    case 'price-asc': return a.price - b.price;
+                    case 'price-desc': return b.price - a.price;
+                    case 'rating': return b.rating - a.rating;
+                    case 'popularity': default: return b.popularity - a.popularity;
+                }
+            });
+
+            const totalBooks = filteredBooks.length;
+            const totalPages = Math.ceil(totalBooks / booksPerPage);
+            const start = (currentPage - 1) * booksPerPage;
+            const end = start + booksPerPage;
+            const paginatedBooks = filteredBooks.slice(start, end);
+
+            const container = $('#products-list-container');
+            container.empty();
+            $('#results-count').text(`Showing ${totalBooks > 0 ? start + 1 : 0}-${Math.min(end, totalBooks)} of ${totalBooks} results`);
+
+            const wishlistItems = JSON.parse(sessionStorage.getItem('wishlistItems')) || [];
+
+            if (paginatedBooks.length === 0) {
+                container.html('<div class="col-12 text-center fs-5 text-muted py-5">No books match your criteria.</div>');
+            } else {
+                paginatedBooks.forEach(book => {
+                    const isWishlisted = wishlistItems.some(item => item.id === book.id);
+                    const cardHtml = currentView === 'grid' ? createGridCard(book, isWishlisted) : createListCard(book, isWishlisted);
+                    container.append(cardHtml);
+                });
+            }
+            renderPagination(totalPages, currentPage);
+        }
+
+        function createGridCard(book, isWishlisted) {
+            const stockOverlay = !book.inStock ? '<div class="out-of-stock-overlay"><i class="bi bi-cart-x"></i>Out of Stock</div>' : '';
+            return `
+                <div class="col">
+                    <div class="product-card-listing">
+                        <div class="book-image-container">
+                            ${stockOverlay}
+                            <a href="bookdetails.html?id=${book.id}" class="book-link"><img src="${book.imageUrl}" class="book-cover-img" alt="${book.title}" onerror="this.onerror=null;this.src='https://placehold.co/400x600/ccc/FFFFFF?text=Image+Not+Found';"></a>
+                            <button class="btn-wishlist ${isWishlisted ? 'active' : ''}" onclick="window.toggleWishlist(${book.id}, event)"><i class="bi ${isWishlisted ? 'bi-heart-fill' : 'bi-heart'}"></i></button>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title" title="${book.title}"><a href="book-detail.html?id=${book.id}" class="book-link">${book.title}</a></h5>
+                            <p class="card-subtitle text-muted">${book.author}</p>
+                            <div class="rating-stars my-2" style="color: var(--star-color);">${'★'.repeat(Math.round(book.rating))}${'☆'.repeat(5-Math.round(book.rating))}</div>
+                            <div class="price mt-auto">
+                                <p class="mb-2">₹${book.price.toFixed(2)}</p>
+                            </div>
+                            <button class="btn btn-sm btn-primary w-100 mt-2" onclick="window.addToCart(${book.id})" ${!book.inStock ? 'disabled' : ''}>Add to Cart</button>
+                        </div>
+                    </div>
+                </div>`;
+        }
+
+        function createListCard(book, isWishlisted) {
+            const stockOverlay = !book.inStock ? '<div class="out-of-stock-overlay"><i class="bi bi-cart-x"></i>Out of Stock</div>' : '';
+             return `
+                <div class="col-12">
+                    <div class="product-card-listing">
+                        <div class="book-image-container">
+                            ${stockOverlay}
+                             <a href="bookdetails.html?id=${book.id}" class="book-link"><img src="${book.imageUrl}" class="book-cover-img" alt="${book.title}" onerror="this.onerror=null;this.src='https://placehold.co/400x600/ccc/FFFFFF?text=Image+Not+Found';"></a>
+                            <button class="btn-wishlist ${isWishlisted ? 'active' : ''}" onclick="window.toggleWishlist(${book.id}, event)"><i class="bi ${isWishlisted ? 'bi-heart-fill' : 'bi-heart'}"></i></button>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title"><a href="bookdetails.html?id=${book.id}" class="book-link">${book.title}</a></h5>
+                            <p class="card-subtitle text-muted">by ${book.author}</p>
+                            <p class="description d-none d-md-block">${book.description}</p>
+                             <div class="rating-stars mb-2" style="color: var(--star-color);">${'★'.repeat(Math.round(book.rating))}${'☆'.repeat(5-Math.round(book.rating))}</div>
+                            <div class="price-actions-wrapper d-flex justify-content-between align-items-center">
+                                <p class="price mb-0">₹${book.price.toFixed(2)}</p>
+                                <div class="d-flex align-items-center gap-2">
+                                    <button class="btn btn-primary" onclick="window.addToCart(${book.id})" ${!book.inStock ? 'disabled' : ''}>Add to Cart</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>`;
+        }
+        
+        // --- PAGINATION & INTERACTION FUNCTIONS (Made global for inline onclick) ---
+        window.changePage = function(page) {
+            currentPage = page;
+            renderBooks();
+            window.scrollTo(0, 0);
+        }
+
+        window.toggleWishlist = function(bookId, event) {
+            event.preventDefault();
+            event.stopPropagation();
+            let wishlist = JSON.parse(sessionStorage.getItem('wishlistItems')) || [];
+            const book = allBooks.find(b => b.id === bookId);
+            const itemIndex = wishlist.findIndex(item => item.id === bookId);
+            if (itemIndex > -1) {
+                wishlist.splice(itemIndex, 1);
+                alert(`'${book.title}' removed from your wishlist.`);
+            } else {
+                wishlist.push(book);
+                alert(`'${book.title}' added to your wishlist! Redirecting...`);
+                window.location.href = 'wishlist.html';
+            }
+            sessionStorage.setItem('wishlistItems', JSON.stringify(wishlist));
+            renderBooks();
+        };
+        
+        window.addToCart = function(bookId) {
+            const book = allBooks.find(b => b.id === bookId);
+            if (!book) return;
+            let cart = JSON.parse(sessionStorage.getItem('cart')) || [];
+            let existingItem = cart.find(item => item.id === bookId);
+            if (existingItem) {
+                existingItem.quantity++;
+            } else {
+                cart.push({ ...book, quantity: 1 });
+            }
+            sessionStorage.setItem('cart', JSON.stringify(cart));
+            alert(`'${book.title}' was added to your cart. Redirecting...`);
+            window.location.href = 'cart.html';
+        };
+
+        function renderPagination(totalPages, page) {
+            const paginationContainer = $('#pagination-controls');
+            paginationContainer.empty();
+            if (totalPages <= 1) return;
+
+            let li = `<li class="page-item ${page === 1 ? 'disabled' : ''}"><a class="page-link" href="#" onclick="window.changePage(${page - 1})">Previous</a></li>`;
+
+            const maxVisiblePages = 5;
+            let startPage = Math.max(1, page - Math.floor(maxVisiblePages / 2));
+            let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+            
+            if(endPage - startPage + 1 < maxVisiblePages){
+                startPage = Math.max(1, endPage - maxVisiblePages + 1);
+            }
+
+            if (startPage > 1) {
+                li += `<li class="page-item"><a class="page-link" href="#" onclick="window.changePage(1)">1</a></li>`;
+                if (startPage > 2) {
+                    li += `<li class="page-item disabled"><span class="page-link">...</span></li>`;
+                }
+            }
+
+            for (let i = startPage; i <= endPage; i++) {
+                li += `<li class="page-item ${i === page ? 'active' : ''}"><a class="page-link" href="#" onclick="window.changePage(${i})">${i}</a></li>`;
+            }
+
+            if (endPage < totalPages) {
+                if (endPage < totalPages - 1) {
+                    li += `<li class="page-item disabled"><span class="page-link">...</span></li>`;
+                }
+                li += `<li class="page-item"><a class="page-link" href="#" onclick="window.changePage(${totalPages})">${totalPages}</a></li>`;
+            }
+
+            li += `<li class="page-item ${page === totalPages ? 'disabled' : ''}"><a class="page-link" href="#" onclick="window.changePage(${page + 1})">Next</a></li>`;
+            paginationContainer.html(li);
+        }
+
+
+        // --- LOGIN/LOGOUT UI LOGIC ---
+        function updateNavUI() {
+            if (sessionStorage.getItem('isLoggedIn') === 'true') {
+                $('.login-nav-item').addClass('d-none');
+                $('.user-nav-item').removeClass('d-none').find('.dropdown-toggle').html(`<i class="bi bi-person-circle me-1"></i> ${sessionStorage.getItem('userName') || 'User'}`);
+            } else {
+                $('.login-nav-item').removeClass('d-none');
+                $('.user-nav-item').addClass('d-none');
+            }
+        }
+        
+        // --- EVENT LISTENERS ---
+        $('#priceRange').on('input', function() {
+            $('.price-range-display').text(`Price: ₹0 - ₹${$(this).val()}`);
+        }).on('change', () => { currentPage = 1; renderBooks(); });
+
+        $('#category-filters').on('change', '.filter-checkbox', () => { currentPage = 1; renderBooks(); });
+        $('#includeOOS, #sort-by').on('change', () => { currentPage = 1; renderBooks(); });
+        $('#headerSearchInput').on('keyup', () => { currentPage = 1; renderBooks(); });
+
+        $('.rating-filter a').on('click', function(e) {
+            e.preventDefault();
+            if($(this).hasClass('active') && $(this).data('rating') != 0) {
+                $(this).removeClass('active');
+            } else {
+                $('.rating-filter a').removeClass('active');
+                $(this).addClass('active');
+            }
+            currentPage = 1;
+            renderBooks();
+        });
+
+        $('.view-toggle').on('click', function() {
+            currentView = $(this).data('view');
+            $('.view-toggle').removeClass('active');
+            $(this).addClass('active');
+            const container = $('#products-list-container');
+            container.removeClass('grid-view list-view');
+            
+            if (currentView === 'list') {
+                container.addClass('list-view').removeClass('row-cols-sm-2 row-cols-lg-3 row-cols-xl-4');
+            } else {
+                container.addClass('grid-view').addClass('row-cols-sm-2 row-cols-lg-3 row-cols-xl-4');
+            }
+            renderBooks();
+        });
+
+        $('#logout-link').on('click', function(e) {
+            e.preventDefault();
+            sessionStorage.clear();
+            updateNavUI();
+            currentPage = 1;
+            renderBooks();
+        });
+
+        // --- INITIAL LOAD ---
+        generateBooks();
+        populateCategoryFilters();
+        updateNavUI();
+        renderBooks();
+    });
+    </script>
+</body>
+</html>

@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bookory - Your Online Bookstore</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    
+    <!-- Google Fonts: Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Custom Styles -->
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8f9fa;
+        }
+
+        /* --- Custom Colors & Buttons --- */
+        :root {
+            --bs-primary-rgb: 255, 102, 0; /* Orange accent */
+            --bs-secondary-rgb: 75, 85, 99; /* Gray text */
+        }
+
+        .btn-primary {
+            --bs-btn-bg: #FF6600;
+            --bs-btn-border-color: #FF6600;
+            --bs-btn-hover-bg: #e65c00;
+            --bs-btn-hover-border-color: #e65c00;
+            font-weight: 500;
+            padding: 0.6rem 1.5rem;
+        }
+        
+        .text-primary { color: #FF6600 !important; }
+        .section-title { font-weight: 600; }
+        .navbar { border-bottom: 1px solid #dee2e6; padding-top: 0.75rem; padding-bottom: 0.75rem; }
+        .navbar-brand { font-weight: 700; font-size: 1.5rem; }
+        .nav-link { font-weight: 500; color: #212529; }
+        .nav-link.active, .nav-link:hover { color: #FF6600; }
+        .navbar .form-control { padding-top: 0.6rem; padding-bottom: 0.6rem; }
+        .hero-section { background: url('https://images.unsplash.com/photo-1507842217343-583bb7270b66?q=80&w=2070&auto=format&fit=crop') center/cover; padding: 6rem 0; color: #fff; position: relative; }
+        .hero-section::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(0, 0, 0, 0.5); }
+        .hero-section .container { position: relative; z-index: 2; }
+        .hero-section h1 { font-size: 3.5rem; font-weight: 700; }
+        .book-card { border: none; transition: transform 0.2s ease, box-shadow 0.2s ease; background-color: #fff; height: 100%;}
+        .book-card:hover { transform: translateY(-5px); box-shadow: 0 0.5rem 1rem rgba(0,0,0,.15)!important; }
+        .book-card .card-img-top {
+            width: 100%;
+            height: 350px;
+            object-fit: cover;
+        }
+        .book-card .card-body {
+            text-align: center;
+        }
+        .book-card .card-title {
+            font-size: 1rem;
+            font-weight: 600;
+        }
+        .deals-banner { background-color: #fff1e6; padding: 3rem; border-radius: 0.5rem; }
+        
+        /* --- Footer Styles --- */
+        .footer-section {
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            padding: 3rem 0;
+        }
+        .footer-section h5 {
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: #fff;
+        }
+        .footer-section .list-unstyled li {
+            margin-bottom: 0.75rem;
+        }
+        .footer-section .list-unstyled a {
+            color: #bdc3c7; /* Light gray for links */
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+        .footer-section .list-unstyled a:hover {
+            color: #FF6600;
+        }
+        .footer-section .social-icons a {
+            font-size: 1.5rem;
+            margin-right: 1rem;
+            color: #bdc3c7;
+            transition: color 0.2s ease;
+        }
+        .footer-section .social-icons a:hover {
+            color: #FF6600;
+        }
+        .footer-bottom {
+            background-color: #233140;
+            padding: 1rem 0;
+            border-top: 1px solid #34495e;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header class="bg-white sticky-top shadow-sm">
+        <nav class="navbar navbar-expand-lg">
+            <div class="container-fluid px-md-4">
+                <a class="navbar-brand text-primary me-4" href="homepage.html">Bookory</a>
+                <!-- SEARCH FORM UPDATED -->
+                <form class="d-flex flex-grow-1" role="search" id="search-form">
+                    <div class="input-group">
+                        <span class="input-group-text bg-light border-end-0"><i class="bi bi-search"></i></span>
+                        <input class="form-control border-start-0" type="search" id="search-input" placeholder="Search for Books, Authors and More">
+                    </div>
+                </form>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar"><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="mainNavbar">
+                    <ul class="navbar-nav ms-auto d-flex align-items-center">
+                        <li class="nav-item login-nav-item">
+                            <a href="login.html" class="btn btn-primary mx-2">Login</a>
+                        </li>
+                        <li class="nav-item dropdown d-none user-nav-item" id="user-dropdown">
+                            <a class="nav-link dropdown-toggle fw-medium" href="#" role="button" data-bs-toggle="dropdown"><i class="bi bi-person-circle me-1"></i> User</a>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li><a class="dropdown-item user-protected-link" href="myprofile.html"><i class="bi bi-person me-2"></i> My Profile</a></li>
+                                <li><a class="dropdown-item user-protected-link" href="orders.html"><i class="bi bi-box-seam me-2"></i> Orders</a></li>
+                                <li><a class="dropdown-item user-protected-link" href="wishlist.html"><i class="bi bi-heart me-2"></i> Wishlist</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="#" id="logout-link"><i class="bi bi-box-arrow-right me-2"></i> Logout</a></li>
+                            </ul>
+                        </li>
+                        <!-- WISHLIST LINK ADDED & VENDOR LINK REMOVED -->
+                        <li class="nav-item"><a class="nav-link fw-medium user-protected-link" href="wishlist.html"><i class="bi bi-heart me-1"></i> Wishlist</a></li>
+                        <li class="nav-item"><a class="nav-link fw-medium user-protected-link" href="cart.html"><i class="bi bi-cart3 me-1"></i> Cart</a></li>
+                        <li class="nav-item dropdown">
+                             <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown"><i class="bi bi-three-dots-vertical"></i></a>
+                             <ul class="dropdown-menu dropdown-menu-end">
+                                 <li><a class="dropdown-item" href="#">Notifications</a></li>
+                                 <li><a class="dropdown-item" href="#">24x7 Customer Care</a></li>
+                             </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Sections from original design -->
+        <section class="hero-section text-center">
+            <div class="container">
+               <p class="text-uppercase mb-2">Adventure Awaits on The Pages</p>
+               <h1 class="mb-4">50% Off Hundreds Of Books</h1>
+               <p class="lead mb-4">Online And In Stores Only</p>
+               <a href="shoppage.html" class="btn btn-primary btn-lg rounded-pill">Shop Now <i class="bi bi-arrow-right"></i></a>
+           </div>
+        </section>
+        <section class="py-5">
+            <div class="container">
+               <div class="d-flex justify-content-between align-items-center mb-4">
+                   <h2 class="section-title">Bestselling Books</h2>
+                   <a href="shoppage.html" class="btn btn-outline-primary btn-sm rounded-pill">View All</a>
+               </div>
+               <!-- BESTSELLING BOOKS CONTAINER -->
+               <div class="row row-cols-2 row-cols-md-3 row-cols-lg-6 g-4" id="bestselling-books-container">
+                   <!-- Book items will be dynamically populated here by JavaScript -->
+               </div>
+            </div>
+        </section>
+    </main>
+    
+    <!-- FOOTER UPDATED -->
+    <footer class="footer-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h5>About Bookory</h5>
+                    <p class="text-white-50">Your one-stop shop for all the books you love. Discover new worlds and adventures with our vast collection.</p>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#">Home</a></li>
+                        <li><a href="shoppage.html">Shop</a></li>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h5>Contact Us</h5>
+                    <ul class="list-unstyled text-white-50">
+                        <li><i class="bi bi-geo-alt-fill me-2"></i>123 Book Lane, Readville</li>
+                        <li><i class="bi bi-telephone-fill me-2"></i>(123) 456-7890</li>
+                        <li><i class="bi bi-envelope-fill me-2"></i>support@bookory.com</li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <h5>Newsletter</h5>
+                    <p class="text-white-50">Subscribe to our newsletter for the latest updates and offers.</p>
+                    <form>
+                        <div class="input-group">
+                            <input type="email" class="form-control" placeholder="Your email address">
+                            <button class="btn btn-primary" type="button">Subscribe</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="social-icons mt-4">
+                <a href="#"><i class="bi bi-facebook"></i></a>
+                <a href="#"><i class="bi bi-twitter-x"></i></a>
+                <a href="#"><i class="bi bi-instagram"></i></a>
+            </div>
+        </div>
+    </footer>
+    <div class="footer-bottom text-center text-secondary">
+        <p class="mb-0">&copy; 2025 Bookory. All Rights Reserved.</p>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // --- Update Navbar based on Login State ---
+            function updateNavUI() {
+                const isLoggedIn = sessionStorage.getItem('isLoggedIn') === 'true';
+                const userName = sessionStorage.getItem('userName');
+                const isAdmin = sessionStorage.getItem('isAdmin') === 'true';
+
+                if (isLoggedIn) {
+                    $('.login-nav-item').addClass('d-none');
+                    $('.user-nav-item').removeClass('d-none');
+                    $('.user-nav-item .dropdown-toggle').html(`<i class="bi bi-person-circle me-1"></i> ${userName || 'User'}`);
+                    
+                    if (isAdmin && $('#admin-dashboard-link').length === 0) {
+                        $('#user-dropdown .dropdown-menu').prepend('<li><a class="dropdown-item fw-bold" href="admindashboard.html" id="admin-dashboard-link"><i class="bi bi-speedometer2 me-2"></i>Admin Dashboard</a></li>');
+                    }
+                } else {
+                    $('.login-nav-item').removeClass('d-none');
+                    $('.user-nav-item').addClass('d-none');
+                }
+            }
+            
+            // --- Handle Logout ---
+            $('#logout-link').on('click', function(e) {
+                e.preventDefault(); 
+                sessionStorage.clear(); 
+                window.location.href = 'homepage.html'; 
+            });
+
+            // --- Handle Protected Links ---
+            $(document).on('click', '.user-protected-link', function(e) {
+                if (sessionStorage.getItem('isLoggedIn') !== 'true') {
+                    e.preventDefault();
+                    window.location.href = 'login.html';
+                }
+            });
+            
+            // --- NEW: Search Form Functionality ---
+            $('#search-form').on('submit', function(e) {
+                e.preventDefault(); // Prevent the form from submitting normally
+                const query = $('#search-input').val().trim();
+                if (query) {
+                    // Note: For this to work, shoppage.html must be updated
+                    // to read the 'search' parameter from the URL.
+                    window.location.href = `shoppage.html?search=${encodeURIComponent(query)}`;
+                }
+            });
+
+            // --- NEW: Populate Bestselling Books ---
+            function populateBestsellers() {
+                const bestsellers = [
+                    { title: "To Kill a Mockingbird", author: "Harper Lee", image: "https://m.media-amazon.com/images/I/81a4kCNuH+L._AC_UF1000,1000_QL80_.jpg" },
+
+                    { title: "The Great Gatsby", author: "F. Scott Fitzgerald", image: "https://m.media-amazon.com/images/I/71FTb9X6wsL._AC_UF1000,1000_QL80_.jpg" },
+                    { title: "The Lord of the Rings", author: "J.R.R. Tolkien", image: "https://m.media-amazon.com/images/I/71jLBXtWJWL._AC_UF1000,1000_QL80_.jpg" },
+                    { title: "The Alchemist", author: "Paulo Coelho", image: "https://m.media-amazon.com/images/I/71aG+xDKSYL._AC_UF1000,1000_QL80_.jpg" },
+                    { title: "The Shining", author: "Stephen King", image: "https://m.media-amazon.com/images/I/81c+k+3myLL._AC_UF1000,1000_QL80_.jpg" },
+                    { title: "Dune", author: "Frank Herbert", image: "https://m.media-amazon.com/images/I/81nq+ewtkcL._AC_UF1000,1000_QL80_.jpg"},
+                    { title: "Sapiens: A Brief History of Humankind", author: "Yuval Noah Harari", image: "https://m.media-amazon.com/images/I/81nQ+oGgI3L._AC_UF1000,1000_QL80_.jpg"},
+                    { title: "Atomic Habits", author: "James Clear", image: "https://m.media-amazon.com/images/I/81bGKUa1e0L._AC_UF1000,1000_QL80_.jpg"},
+                    { title: "The Silent Patient", author: "Alex Michaelides", image: "https://m.media-amazon.com/images/I/81JJ5rD2A8L._AC_UF1000,1000_QL80_.jpg"},
+                    { title: "Project Hail Mary", author: "Andy Weir", image: "https://m.media-amazon.com/images/I/91+NMO4jV2L._AC_UF1000,1000_QL80_.jpg"},
+                    { title: "Circe", author: "Madeline Miller", image: "https://m.media-amazon.com/images/I/81hvsfK42WL._AC_UF1000,1000_QL80_.jpg"}
+                ];
+
+                const container = $('#bestselling-books-container');
+                container.empty(); // Clear any placeholder content
+
+                bestsellers.forEach(book => {
+                    const cardHtml = `
+                        <div class="col">
+                            <div class="card h-100 book-card">
+                                <img src="${book.image}" class="card-img-top" alt="${book.title}" onerror="this.onerror=null;this.src='https://placehold.co/300x450/ccc/FFFFFF?text=Book';">
+                                <div class="card-body">
+                                    <h5 class="card-title">${book.title}</h5>
+                                </div>
+                            </div>
+                        </div>`;
+                    container.append(cardHtml);
+                });
+            }
+
+            // --- Initial UI setup on page load ---
+            updateNavUI();
+            populateBestsellers(); // Populate books on load
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Bookory</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- --- NEW: BOOTSTRAP ICONS --- -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #FF6600;
+            --primary-color-dark: #e65c00;
+        }
+        body { 
+            font-family: 'Poppins', sans-serif; 
+        }
+        .auth-section { 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            min-height: 100vh; 
+            background: url('https://images.unsplash.com/photo-1550399105-c4db5fb85c18?q=80&w=2071&auto=format&fit=crop') center/cover; 
+        }
+        .auth-container { 
+            max-width: 450px; 
+            width: 100%; 
+            background-color: rgba(255, 255, 255, 0.85); 
+            backdrop-filter: blur(10px); 
+            padding: 2.5rem; 
+            border-radius: 1rem; 
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1); 
+        }
+        .text-primary { 
+            color: var(--primary-color) !important; 
+        }
+        .btn-primary { 
+            background-color: var(--primary-color); 
+            border-color: var(--primary-color); 
+        }
+        .btn-primary:hover { 
+            background-color: var(--primary-color-dark); 
+            border-color: var(--primary-color-dark); 
+        }
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.25rem rgba(255, 102, 0, 0.25);
+        }
+        .error-message {
+            color: #dc3545;
+            font-size: 0.875em;
+            min-height: 1.25rem; /* Prevents layout shifts */
+            padding-left: 0.25rem;
+            text-align: left; /* Aligns text to the left */
+        }
+        /* --- NEW: STYLES FOR PASSWORD TOGGLE --- */
+        .form-floating .form-control {
+            /* Add padding to the right of the input to make space for the icon */
+            padding-right: 3rem; 
+        }
+        #togglePassword {
+            /* Position the icon inside the input field */
+            position: absolute;
+            top: 50%;
+            right: 1rem;
+            transform: translateY(-50%);
+            cursor: pointer;
+            z-index: 2; /* Ensures icon is clickable */
+            color: #6c757d; /* A neutral icon color */
+        }
+    </style>
+</head>
+<body>
+    <div class="auth-section">
+        <div class="auth-container">
+            <div class="text-center mb-4">
+                <a class="navbar-brand text-primary fs-2 fw-bold" href="homepage.html">Bookory</a>
+                <h3 class="mt-2">Welcome Back!</h3>
+                <p class="text-muted">Sign in to continue.</p>
+            </div>
+            <form id="login-form" novalidate>
+                <!-- Email Field -->
+                <div class="mb-3">
+                    <div class="form-floating">
+                        <input type="email" class="form-control" id="loginEmail" placeholder="name@example.com" required>
+                        <label for="loginEmail">Email address</label>
+                    </div>
+                    <div id="loginEmailError" class="error-message"></div>
+                </div>
+                <!-- Password Field -->
+                <div class="mb-3">
+                    <!-- The form-floating div now acts as the positioning container for the icon -->
+                    <div class="form-floating">
+                        <input type="password" class="form-control" id="loginPassword" placeholder="Password" required>
+                        <label for="loginPassword">Password</label>
+                        <!-- The visibility toggle icon -->
+
+                    </div>
+                    <div id="loginPasswordError" class="error-message"></div>
+                </div>
+                <div class="d-grid mb-3">
+                    <button type="submit" class="btn btn-primary btn-lg">Sign In</button>
+                </div>
+                <p class="text-center text-muted">New to Bookory? <a href="registrationpage.html" style="color: var(--primary-color);">Create an account</a></p>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // --- NEW: PASSWORD TOGGLE LOGIC ---
+            $("#togglePassword").click(function() {
+                // Select the password input field
+                const passwordInput = $("#loginPassword");
+                // Check the current type of the input
+                const type = passwordInput.attr("type") === "password" ? "text" : "password";
+                // Change the input type
+                passwordInput.attr("type", type);
+                // Toggle the icon class between eye and eye-slash
+                $(this).toggleClass("bi-eye bi-eye-slash");
+            });
+
+            // --- FORM SUBMISSION LOGIC ---
+            $('#login-form').on('submit', function(e) {
+                e.preventDefault();
+                
+                $('.error-message').text('');
+                $('.form-control').removeClass('is-invalid');
+                
+                let isValid = true;
+
+                function showError(fieldId, errorId, message) {
+                    $(fieldId).addClass('is-invalid');
+                    $(errorId).text(message);
+                    isValid = false;
+                }
+
+                // Validate Email
+                const email = $('#loginEmail').val().trim();
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (email === '') {
+                    showError('#loginEmail', '#loginEmailError', 'Email address is required.');
+                } else if (!emailRegex.test(email)) {
+                    showError('#loginEmail', '#loginEmailError', 'Please enter a valid email address.');
+                }
+
+                // Validate Password
+                const password = $('#loginPassword').val();
+                if (password === '') {
+                    showError('#loginPassword', '#loginPasswordError', 'Password is required.');
+                }
+
+                if (isValid) {
+                    // Check for Admin credentials
+                    if (email === 'admin@bookory.com' && password === 'admin123') {
+                        sessionStorage.setItem('isLoggedIn', 'true');
+                        sessionStorage.setItem('isAdmin', 'true');
+                        sessionStorage.setItem('userName', 'Admin');
+                        window.location.href = 'admindashboard.html';
+                    } else {
+                        const userProfile = JSON.parse(localStorage.getItem('userProfile'));
+                        if (userProfile && userProfile.email === email) {
+                            sessionStorage.setItem('isLoggedIn', 'true');
+                            sessionStorage.removeItem('isAdmin');
+                            sessionStorage.setItem('userName', userProfile.firstName);
+                            window.location.href = 'homepage.html';
+                        } else {
+                            showError('#loginEmail', '#loginEmailError', ' ');
+                            showError('#loginPassword', '#loginPasswordError', 'Invalid email or password.');
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
