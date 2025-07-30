@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Checkout Form</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f5c9a8;
+      background-image: url('https://images.pexels.com/photos/256541/pexels-photo-256541.jpeg?auto=compress&w=1500&q=80');
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-position: center;
+    }
+    .card {
+      background-color: #fff1e6;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.08);
+      border: none;
+    }
+    .item {
+      background: #fff;
+      border: 1px solid #ffd8b0;
+      border-radius: 6px;
+      box-shadow: 0 2px 6px rgba(255, 165, 0, 0.04);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+      padding: 8px 10px 8px 56px;
+      position: relative;
+    }
+    .item img.book-cover {
+      position: absolute;
+      left: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 36px;
+      height: 44px;
+      object-fit: cover;
+      border-radius: 4px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+      background: #fff;
+    }
+    .form-label {
+      font-weight: 500;
+    }
+  </style>
+</head>
+<body>
+  <div class="container py-4">
+    <div class="row g-4">
+      <div class="col-lg-7">
+        <div class="card p-4">
+          <h1 class="mb-3">Checkout Form</h1>
+          <h2 class="h5 mb-3">Billing Address</h2>
+          <form id="checkoutForm">
+            <!-- First Name -->
+            <div class="mb-3">
+              <label class="form-label" for="firstName">First Name</label>
+              <input type="text" class="form-control" id="firstName" />
+            </div>
+            <!-- Last Name -->
+            <div class="mb-3">
+              <label class="form-label" for="lastName">Last Name</label>
+              <input type="text" class="form-control" id="lastName" />
+            </div>
+            <!-- Contact Number -->
+            <div class="mb-3">
+              <label class="form-label" for="contact">Contact Number</label>
+              <input type="tel" class="form-control" id="contact" maxlength="10" />
+            </div>
+            <!-- Email -->
+            <div class="mb-3">
+              <label class="form-label" for="email">Email</label>
+              <input type="email" class="form-control" id="email" />
+            </div>
+            <!-- Address -->
+            <div class="mb-3">
+              <label class="form-label" for="address">Address</label>
+              <input type="text" class="form-control" id="address" />
+            </div>
+            <!-- Country -->
+            <div class="mb-3">
+              <label class="form-label" for="country">Country</label>
+              <select class="form-select" id="country">
+                <option value="">Choose Country...</option>
+                <option>India</option>
+                <option>USA</option>
+                <option>UK</option>
+              </select>
+            </div>
+            <!-- State -->
+            <div class="mb-3">
+              <label class="form-label" for="state">State</label>
+              <select class="form-select" id="state">
+                <option value="">Choose State...</option>
+                <option>Tamil Nadu</option>
+                <option>California</option>
+                <option>London</option>
+              </select>
+            </div>
+            <!-- District -->
+            <div class="mb-3">
+              <label class="form-label" for="district">District</label>
+              <input type="text" class="form-control" id="district" />
+            </div>
+            <!-- Pincode -->
+            <div class="mb-3">
+              <label class="form-label" for="pincode">Pincode</label>
+              <input type="text" class="form-control" id="pincode" maxlength="6" />
+            </div>
+            <!-- Checkboxes -->
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="checkbox" id="sameAddress" />
+              <label class="form-check-label" for="sameAddress">Shipping address same as billing</label>
+            </div>
+            <div class="form-check mb-4">
+              <input class="form-check-input" type="checkbox" id="saveInfo" />
+              <label class="form-check-label" for="saveInfo">Save info for next time</label>
+            </div>
+            <!-- Submit -->
+            <button type="submit" class="btn btn-warning w-100 text-white fw-bold">Continue to Payment</button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Cart -->
+      <div class="col-lg-5">
+        <div class="card p-4">
+          <h2 class="h5 mb-3">Your Cart</h2>
+          <div class="item">
+            <img class="book-cover" src="https://img.icons8.com/color/48/000000/book.png" alt="Book 1" />
+            <span>Product 1</span><span>₹12</span>
+          </div>
+          <div class="item">
+            <img class="book-cover" src="https://img.icons8.com/color/48/000000/book-shelf.png" alt="Book 2" />
+            <span>Product 2</span><span>₹8</span>
+          </div>
+          <form class="d-flex mb-3">
+            <input type="text" class="form-control me-2" placeholder="Promo code" />
+            <button class="btn btn-warning text-white" type="button">Apply</button>
+          </form>
+          <div class="d-flex justify-content-between fw-bold fs-5">
+            <span>Total</span>
+            <span>₹20</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Validation Script -->
+  <script>
+    document.getElementById("checkoutForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      let valid = true;
+
+      const getVal = (id) => document.getElementById(id).value.trim();
+      const showAlert = (msg) => { alert(msg); valid = false; };
+
+      if (!/^[A-Za-z]+$/.test(getVal('firstName'))) showAlert("Please enter a valid First Name.");
+      if (!/^[A-Za-z]+$/.test(getVal('lastName'))) showAlert("Please enter a valid Last Name.");
+      if (!/^\d{10}$/.test(getVal('contact'))) showAlert("Contact number must be 10 digits.");
+      if (!/^\S+@\S+\.\S+$/.test(getVal('email'))) showAlert("Please enter a valid Email.");
+      if (getVal('address') === "") showAlert("Address is required.");
+      if (getVal('country') === "") showAlert("Please select a Country.");
+      if (getVal('state') === "") showAlert("Please select a State.");
+      if (!/^[A-Za-z\s]+$/.test(getVal('district'))) showAlert("Please enter a valid District.");
+      if (!/^\d{6}$/.test(getVal('pincode'))) showAlert("Pincode must be 6 digits.");
+
+      if (valid) {
+        window.location.href = "payment.html";
+      }
+    });
+  </script>
+</body>
+</html>
