@@ -3,221 +3,336 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bookory - All Books</title>
+    <title>Bookory - Online Bookstore</title>
+
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    
     <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <!-- Google Fonts: Poppins -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Custom Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
     <style>
+        /* Orange and White Theme */
         :root {
-            --accent-orange: #FF6600;
-            --dark-text: #2c3e50;
-            --secondary-text-color: #6c757d;
-            --card-bg: #ffffff;
-            --bg-light: #f8f9fa;
-            --star-color: #ffc107;
-            --border-color: #e9ecef;
+            --bs-primary: #F97316; /* Orange */
+            --bs-primary-rgb: 249, 115, 22;
+            --bs-light: #f8f9fa;
+            --bs-dark: #343a40;
         }
 
         body {
-            font-family: 'Poppins', sans-serif;
-            background-color: var(--bg-light);
-            color: var(--dark-text);
+            background-color: #fff;
+            font-family: 'Inter', sans-serif;
         }
 
-        .text-primary { color: var(--accent-orange) !important; }
-        .btn-primary { background-color: var(--accent-orange); border-color: var(--accent-orange); --bs-btn-hover-bg: #e65c00; --bs-btn-hover-border-color: #e65c00; }
-        .navbar-brand { font-weight: 700; font-size: 1.5rem; }
-        .main-content-area { padding: 30px 0; }
-        
-        /* Filter Sidebar Styling */
-        .filter-sidebar { background-color: var(--card-bg); border-radius: 8px; padding: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); margin-bottom: 30px; }
-        .filter-sidebar h4 { font-size: 1.3rem; font-weight: 700; margin-bottom: 20px; position: relative; padding-bottom: 10px; }
-        .filter-sidebar h4::after { content: ''; position: absolute; left: 0; bottom: 0; width: 40px; height: 3px; background-color: var(--accent-orange); border-radius: 5px; }
-        .filter-option-group { margin-bottom: 25px; }
-        .filter-option-group h5 { font-size: 1rem; font-weight: 600; margin-bottom: 12px; }
-        .filter-option-group .form-check-label { font-size: 0.9rem; }
-        .filter-option-group .form-check-input:checked { background-color: var(--accent-orange); border-color: var(--accent-orange); }
-        .price-range-display { font-weight: 600; margin-top: 10px; font-size: 0.95rem; }
-        .rating-filter a { text-decoration: none; color: var(--secondary-text-color); }
-        .rating-filter a.active, .rating-filter a:hover { color: var(--accent-orange); }
-        .rating-filter .bi-star-fill { color: var(--star-color); }
-        
-        /* Listing Controls (Sort by, View Toggle) */
-        .listing-controls { background-color: var(--card-bg); border-radius: 8px; padding: 15px 20px; margin-bottom: 25px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
-
-        /* Book Card General Styles */
-        a.book-link { text-decoration: none; color: inherit; }
-        .product-card-listing { transition: transform 0.2s ease, box-shadow 0.2s ease; border: 1px solid #eee; border-radius: 8px; overflow: hidden; background-color: var(--card-bg); height: 100%; display: flex; }
-        .product-card-listing:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
-        .book-actions .btn { font-size: 0.8rem; padding: 0.3rem 0.6rem; }
-        .btn-wishlist { background-color: rgba(255, 255, 255, 0.8); border-radius: 50%; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; text-decoration: none; color: var(--dark-text); transition: all 0.2s ease; border:none; }
-        .btn-wishlist:hover { transform: scale(1.1); }
-        .btn-wishlist.active { color: var(--accent-orange); }
-
-        /* Grid View Specific Styles */
-        .grid-view .product-card-listing { flex-direction: column; text-align: center; }
-        .grid-view .book-image-container { position: relative; width: 100%; height: 350px; display: flex; align-items: center; justify-content: center; background-color: #e9ecef; }
-        .grid-view .book-cover-img { width: 100%; height: 100%; object-fit: cover; }
-        .grid-view .btn-wishlist { position: absolute; top: 10px; right: 10px; z-index: 2;}
-        .grid-view .card-body { padding: 15px; flex-grow: 1; display: flex; flex-direction: column; }
-        .grid-view .card-title { font-weight: 600; font-size: 1rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .grid-view .card-subtitle { font-size: 0.85rem; color: var(--secondary-text-color); }
-        .grid-view .price { font-weight: 700; color: var(--accent-orange); font-size: 1.1rem; margin: 0.5rem 0; margin-top: auto; }
-        
-        /* List View Specific Styles */
-        .list-view .product-card-listing { flex-direction: row; align-items: stretch; min-height: 220px; }
-        .list-view .book-image-container { position: relative; width: 180px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; background-color: #e9ecef; }
-        .list-view .book-cover-img { width: 100%; height: 100%; object-fit: cover; }
-        .list-view .btn-wishlist { position: absolute; top: 10px; right: 10px; z-index: 2;}
-        .list-view .card-body { padding: 20px; text-align: left; flex-grow: 1; display: flex; flex-direction: column; }
-        .list-view .card-title { font-size: 1.25rem; font-weight: 600; }
-        .list-view .card-subtitle { font-size: 1rem; color: var(--secondary-text-color); margin-bottom: 10px; }
-        .list-view .description { font-size: 0.9rem; margin-bottom: 15px; }
-        .list-view .price-actions-wrapper { margin-top: auto; }
-        .list-view .price { font-size: 1.5rem; font-weight: 600; color: var(--accent-orange); }
-
-        /* Out of Stock Overlay */
-        .out-of-stock-overlay {
+        /* Navbar */
+        .navbar {
+            border-bottom: 1px solid #dee2e6;
+        }
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.75rem;
+            color: var(--bs-primary);
+        }
+        .nav-link .badge {
             position: absolute;
             top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: rgba(248, 249, 250, 0.9); /* More opaque */
-            color: var(--dark-text);
-            font-weight: 700;
-            font-size: 1.2rem;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            z-index: 1;
-            backdrop-filter: blur(2px);
+            right: -5px;
+            font-size: 0.6em;
         }
-        .out-of-stock-overlay .bi {
-            font-size: 3rem;
-            margin-bottom: 0.5rem;
+
+
+        /* Buttons */
+        .btn-primary {
+            background-color: var(--bs-primary);
+            border-color: var(--bs-primary);
+        }
+        .btn-primary:hover {
+            background-color: #EA580C;
+            border-color: #EA580C;
+        }
+        .btn-warning {
+            background-color: var(--bs-primary);
+            border-color: var(--bs-primary);
+            font-weight: 600;
+            color: #fff;
+        }
+        .btn-warning:hover {
+            background-color: #EA580C;
+            border-color: #EA580C;
+        }
+
+        /* Filters */
+        .filter-section {
+            padding: 1.5rem;
+            background-color: var(--bs-light);
+            border-radius: 0.5rem;
+            position: sticky;
+            top: 80px;
+        }
+        .list-group-item.active {
+            background-color: var(--bs-primary);
+            border-color: var(--bs-primary);
+        }
+        .form-range::-webkit-slider-thumb {
+            background-color: var(--bs-primary);
+        }
+        .form-range::-moz-range-thumb {
+            background-color: var(--bs-primary);
+        }
+
+        /* Product Card - Grid View (Default) */
+        .product-card {
+            border: 1px solid #e9ecef;
+            border-radius: 0.5rem;
+            transition: box-shadow 0.3s ease, transform 0.3s ease;
+            background-color: #fff;
+            height: 100%;
+        }
+        .product-card:hover {
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            transform: translateY(-5px);
+        }
+        .product-card .card-img-top {
+            aspect-ratio: 2 / 3;
+            object-fit: cover;
+            background-color: #f8f9fa; /* Placeholder color */
+        }
+        .product-card .card-img-top span {
+            color: #6c757d;
+        }
+        .product-card .price {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--bs-dark);
+        }
+        .wishlist-btn {
+            position: absolute; top: 10px; right: 10px; background-color: rgba(255, 255, 255, 0.8);
+            border: 1px solid #dee2e6; border-radius: 50%; width: 35px; height: 35px;
+            display: flex; align-items: center; justify-content: center; cursor: pointer;
+            transition: all 0.2s;
+            z-index: 10;
+        }
+        .wishlist-btn:hover, .wishlist-btn.active {
+            background-color: #e83e8c; color: #fff; border-color: #e83e8c;
+        }
+
+        /* Top Bar & View Toggle */
+        .top-bar {
+            background-color: var(--bs-light);
+            padding: 0.75rem 1.25rem;
+            border-radius: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .view-toggle .btn {
+            color: var(--bs-dark);
+        }
+        .view-toggle .btn.active {
+            color: #fff;
+            background-color: var(--bs-primary);
+            border-color: var(--bs-primary);
         }
         
-        /* Custom disabled button style */
-        .btn-primary:disabled {
-            background-color: var(--secondary-text-color);
-            border-color: var(--secondary-text-color);
-            opacity: 0.65;
+        /* List View Styles */
+        #product-grid.list-view .product-item {
+            width: 100%; /* Each item takes full width */
+        }
+        #product-grid.list-view .product-card {
+            flex-direction: row;
+        }
+        #product-grid.list-view .card-img-top {
+            width: 150px;
+            height: auto;
+            border-radius: 0.5rem 0 0 0.5rem;
+        }
+        #product-grid.list-view .card-body {
+            text-align: left;
+            padding-left: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        #product-grid.list-view .price-actions {
+            margin-top: auto;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        #product-grid.list-view .price {
+            margin-bottom: 0;
+        }
+        #product-grid.list-view .add-to-cart-btn {
+            min-width: 120px;
         }
 
-        /* Footer */
-        .footer-section { background-color: #2c3e50; color: #ecf0f1; padding: 3rem 0; }
-        .footer-bottom { background-color: #233140; padding: 1rem 0; border-top: 1px solid #34495e; }
 
+        /* Toast Notification */
+        .toast-container {
+            z-index: 1090;
+        }
+
+
+         /* --- Footer Styles --- */
+        .footer-section {
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            padding: 3rem 0;
+        }
+        .footer-section h5 {
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: #fff;
+        }
+        .footer-section .list-unstyled li {
+            margin-bottom: 0.75rem;
+        }
+        .footer-section .list-unstyled a {
+            color: #bdc3c7; /* Light gray for links */
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+        .footer-section .list-unstyled a:hover {
+            color: #FF6600;
+        }
+        .footer-section .social-icons a {
+            font-size: 1.5rem;
+            margin-right: 1rem;
+            color: #bdc3c7;
+            transition: color 0.2s ease;
+        }
+        .footer-section .social-icons a:hover {
+            color: #FF6600;
+        }
+        .footer-bottom {
+            background-color: #233140;
+            padding: 1rem 0;
+            border-top: 1px solid #34495e;
+        }
     </style>
 </head>
 <body>
 
-    <!-- UNIFIED HEADER -->
-    <header class="bg-white sticky-top shadow-sm">
-        <nav class="navbar navbar-expand-lg">
-            <div class="container-fluid px-md-4">
-                <a class="navbar-brand text-primary me-4" href="homepage.html">Bookory</a>
-                <form class="d-flex flex-grow-1" role="search" onsubmit="return false;">
-                    <div class="input-group">
-                        <span class="input-group-text bg-light border-end-0"><i class="bi bi-search"></i></span>
-                        <input class="form-control border-start-0" type="search" id="headerSearchInput" placeholder="Search for Books, Authors...">
-                    </div>
-                </form>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar"><span class="navbar-toggler-icon"></span></button>
-                <div class="collapse navbar-collapse" id="mainNavbar">
-                    <ul class="navbar-nav ms-auto d-flex align-items-center">
-                        <li class="nav-item login-nav-item">
-                            <a href="login.html" class="btn btn-primary mx-2">Login</a>
-                        </li>
-                        <li class="nav-item dropdown d-none user-nav-item" id="user-dropdown">
-                            <a class="nav-link dropdown-toggle fw-medium" href="#" role="button" data-bs-toggle="dropdown"><i class="bi bi-person-circle me-1"></i> User</a>
-                            <ul class="dropdown-menu dropdown-menu-end">
-                                <li><a class="dropdown-item" href="myprofile.html"><i class="bi bi-person me-2"></i> My Profile</a></li>
-                                <li><a class="dropdown-item" href="orders.html"><i class="bi bi-box-seam me-2"></i> Orders</a></li>
-                                <li><a class="dropdown-item" href="wishlist.html"><i class="bi bi-heart me-2"></i> Wishlist</a></li>
-                                <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="#" id="logout-link"><i class="bi bi-box-arrow-right me-2"></i> Logout</a></li>
-                            </ul>
-                        </li>
-                        <li class="nav-item"><a class="nav-link fw-medium" href="wishlist.html"><i class="bi bi-heart me-1"></i> Wishlist</a></li>
-                        <li class="nav-item"><a class="nav-link fw-medium" href="cart.html"><i class="bi bi-cart3 me-1"></i> Cart</a></li>
-                    </ul>
+    <header class="navbar navbar-expand-lg navbar-light bg-white sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="homepage.html">Bookory</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <div class="input-group mx-auto" style="max-width: 500px;">
+                    <input type="text" id="search-input" class="form-control" placeholder="Search by Title or Author...">
+                    <button class="btn btn-primary" type="button" id="search-btn"><i class="bi bi-search"></i></button>
                 </div>
-            </div>
-        </nav>
-    </header>
-
-    <main class="main-content-area container">
-        <div class="row g-4">
-            <!-- UNIFIED FILTER SIDEBAR -->
-            <div class="col-lg-3">
-                <aside class="filter-sidebar">
-                    <h4>Filter Options</h4>
-                    <div class="filter-option-group">
-                        <h5>Category</h5>
-                        <div id="category-filters">
-                            <!-- Categories will be dynamically inserted here -->
-                        </div>
-                    </div>
-                    <div class="filter-option-group">
-                        <h5>Price Range</h5>
-                        <input type="range" class="form-range" min="0" max="100" value="100" id="priceRange">
-                        <p class="price-range-display text-center">Price: ₹0 - ₹100</p>
-                    </div>
-                    <div class="filter-option-group">
-                        <h5>Customer Rating</h5>
-                        <div class="rating-filter">
-                            <a href="#" class="d-block" data-rating="4"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star"></i> & Up</a>
-                            <a href="#" class="d-block" data-rating="3"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star"></i><i class="bi bi-star"></i> & Up</a>
-                            <a href="#" class="d-block" data-rating="0">Any Rating</a>
-                        </div>
-                    </div>
-                    <div class="filter-option-group">
-                        <div class="form-check form-switch"><input class="form-check-input" type="checkbox" role="switch" id="includeOOS"><label class="form-check-label" for="includeOOS">Include Out of Stock</label></div>
-                    </div>
-                </aside>
-            </div>
-
-            <!-- UNIFIED MAIN CONTENT -->
-            <div class="col-lg-9">
-                <div class="listing-controls d-flex justify-content-between align-items-center">
-                    <div id="results-count" class="text-muted"></div>
-                    <div class="d-flex align-items-center gap-3">
-                        <select class="form-select form-select-sm" id="sort-by">
-                            <option value="popularity">Popularity</option>
-                            <option value="price-asc">Price: Low to High</option>
-                            <option value="price-desc">Price: High to Low</option>
-                            <option value="rating">Customer Rating</option>
-                        </select>
-                        <div class="btn-group" role="group">
-                            <button type="button" class="btn btn-outline-secondary view-toggle active" data-view="grid"><i class="bi bi-grid-fill"></i></button>
-                            <button type="button" class="btn btn-outline-secondary view-toggle" data-view="list"><i class="bi bi-list-task"></i></button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- IMPROVED GRID LAYOUT -->
-                <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4 g-4 grid-view" id="products-list-container">
-                    <!-- Products will be dynamically loaded here -->
-                </div>
-                
-                <nav class="mt-4">
-                    <ul class="pagination justify-content-center" id="pagination-controls"></ul>
-                </nav>
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item">
+                        <a class="nav-link position-relative" href="wishlist.html">
+                            <i class="bi bi-heart"></i> Wishlist
+                            <span id="wishlist-badge" class="badge rounded-pill bg-danger d-none"></span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link position-relative" href="cart.html">
+                            <i class="bi bi-cart"></i> Cart
+                            <span id="cart-badge" class="badge rounded-pill bg-danger d-none"></span>
+                        </a>
+                    </li>
+                </ul>
             </div>
         </div>
+    </header>
+
+    <main class="container my-5">
+        <div class="row">
+            <aside class="col-lg-3">
+                <div class="filter-section">
+                    <h5>Filter Options</h5>
+                    <hr>
+                    <div class="mb-4">
+                        <h6>Category</h6>
+                        <div class="list-group category-filter">
+                             <a href="#" class="list-group-item list-group-item-action active" data-category="All">All Categories</a>
+                            <a href="#" class="list-group-item list-group-item-action" data-category="Biography">Biography</a>
+                            <a href="#" class="list-group-item list-group-item-action" data-category="Business">Business</a>
+                            <a href="#" class="list-group-item list-group-item-action" data-category="Comics">Comics</a>
+                            <a href="#" class="list-group-item list-group-item-action" data-category="Cooking">Cooking</a>
+                            <a href="#" class="list-group-item list-group-item-action" data-category="Fantasy">Fantasy</a>
+                            <a href="#" class="list-group-item list-group-item-action" data-category="Fiction">Fiction</a>
+                            <a href="#" class="list-group-item list-group-item-action" data-category="History">History</a>
+                            <a href="#" class="list-group-item list-group-item-action" data-category="Mystery">Mystery</a>
+                            <a href="#" class="list-group-item list-group-item-action" data-category="Poetry">Poetry</a>
+                            <a href="#" class="list-group-item list-group-item-action" data-category="Romance">Romance</a>
+                            <a href="#" class="list-group-item list-group-item-action" data-category="Sci-Fi">Sci-Fi</a>
+                            <a href="#" class="list-group-item list-group-item-action" data-category="Science">Science</a>
+                            <a href="#" class="list-group-item list-group-item-action" data-category="Self-Help">Self-Help</a>
+                            <a href="#" class="list-group-item list-group-item-action" data-category="Thriller">Thriller</a>
+                            <a href="#" class="list-group-item list-group-item-action" data-category="Travel">Travel</a>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <div class="d-flex justify-content-between">
+                            <h6>Price Range</h6>
+                            <span id="price-value" class="fw-bold text-primary">₹8,000</span>
+                        </div>
+                        <input type="range" class="form-range" id="priceRange" min="1000" max="8000" step="100" value="8000">
+                        <div class="d-flex justify-content-between small text-muted">
+                            <span>₹1,000</span>
+                            <span>₹8,000</span>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+            <section class="col-lg-9">
+                <div class="top-bar d-flex justify-content-between align-items-center mb-4">
+                    <div class="btn-group view-toggle" role="group">
+                        <button type="button" id="grid-view-btn" class="btn btn-light active" title="Grid View"><i class="bi bi-grid-3x3-gap-fill"></i></button>
+                        <button type="button" id="list-view-btn" class="btn btn-light" title="List View"><i class="bi bi-list"></i></button>
+                    </div>
+                    <span id="results-count" class="text-muted mx-3"></span>
+                    <select id="sort-by" class="form-select" style="width: auto;">
+                        <option value="popularity" selected>Popularity</option>
+                        <option value="price-asc">Price: Low to High</option>
+                        <option value="price-desc">Price: High to Low</option>
+                    </select>
+                </div>
+
+                <div id="product-grid" class="row row-cols-1 row-cols-md-2 row-cols-xl-4 g-4">
+                    <!-- Product items will be dynamically added, filtered, and sorted here -->
+                    <div class="col product-item" data-id="1" data-price="5571" data-category="Fantasy" data-title="The Lord of the Rings" data-author="J.R.R. Tolkien" data-img="https://m.media-amazon.com/images/I/71jLBXtWJWL._AC_UF1000,1000_QL80_.jpg"><div class="card product-card"><button class="wishlist-btn" title="Add to Wishlist"><i class="bi bi-heart"></i></button><img src="https://m.media-amazon.com/images/I/71jLBXtWJWL._AC_UF1000,1000_QL80_.jpg" class="card-img-top" alt="The Lord of the Rings"><div class="card-body text-center d-flex flex-column"><h5 class="card-title">The Lord of the Rings</h5><p class="card-text text-muted mb-3">J.R.R. Tolkien</p><div class="mt-auto price-actions"><p class="price">₹5,571</p><button class="btn btn-warning w-100 add-to-cart-btn">Add to Cart</button></div></div></div></div>
+                    <div class="col product-item" data-id="2" data-price="6993" data-category="Fiction" data-title="One Golden Key" data-author="Herman Melville" data-img=""><div class="card product-card"><button class="wishlist-btn" title="Add to Wishlist"><i class="bi bi-heart"></i></button><div class="card-img-top d-flex align-items-center justify-content-center"><span>Image Not Found</span></div><div class="card-body text-center d-flex flex-column"><h5 class="card-title">One Golden Key</h5><p class="card-text text-muted mb-3">Herman Melville</p><div class="mt-auto price-actions"><p class="price">₹6,993</p><button class="btn btn-warning w-100 add-to-cart-btn">Add to Cart</button></div></div></div></div>
+                    <div class="col product-item" data-id="3" data-price="1806" data-category="Mystery" data-title="Pride and Prejudice" data-author="Jane Austen" data-img="https://m.media-amazon.com/images/I/71Q1tPupKjL._AC_UF1000,1000_QL80_.jpg"><div class="card product-card"><button class="wishlist-btn" title="Add to Wishlist"><i class="bi bi-heart"></i></button><img src="https://m.media-amazon.com/images/I/71Q1tPupKjL._AC_UF1000,1000_QL80_.jpg" class="card-img-top" alt="Pride and Prejudice"><div class="card-body text-center d-flex flex-column"><h5 class="card-title">Pride and Prejudice</h5><p class="card-text text-muted mb-3">Jane Austen</p><div class="mt-auto price-actions"><p class="price">₹1,806</p><button class="btn btn-warning w-100 add-to-cart-btn">Add to Cart</button></div></div></div></div>
+                    <div class="col product-item" data-id="4" data-price="4550" data-category="Fiction" data-title="The Catcher in the Rye" data-author="J. D. Salinger" data-img="https://m.media-amazon.com/images/I/8125BDg3l0L._AC_UF1000,1000_QL80_.jpg"><div class="card product-card"><button class="wishlist-btn" title="Add to Wishlist"><i class="bi bi-heart"></i></button><img src="https://m.media-amazon.com/images/I/8125BDg3l0L._AC_UF1000,1000_QL80_.jpg" class="card-img-top" alt="The Catcher in the Rye"><div class="card-body text-center d-flex flex-column"><h5 class="card-title">The Catcher in the Rye</h5><p class="card-text text-muted mb-3">J. D. Salinger</p><div class="mt-auto price-actions"><p class="price">₹4,550</p><button class="btn btn-warning w-100 add-to-cart-btn">Add to Cart</button></div></div></div></div>
+                    <div class="col product-item" data-id="5" data-price="3500" data-category="Sci-Fi" data-title="Dune" data-author="Frank Herbert" data-img="https://m.media-amazon.com/images/I/81ym3QUd3KL._AC_UF1000,1000_QL80_.jpg"><div class="card product-card"><button class="wishlist-btn" title="Add to Wishlist"><i class="bi bi-heart"></i></button><img src="https://m.media-amazon.com/images/I/81ym3QUd3KL._AC_UF1000,1000_QL80_.jpg" class="card-img-top" alt="Dune"><div class="card-body text-center d-flex flex-column"><h5 class="card-title">Dune</h5><p class="card-text text-muted mb-3">Frank Herbert</p><div class="mt-auto price-actions"><p class="price">₹3,500</p><button class="btn btn-warning w-100 add-to-cart-btn">Add to Cart</button></div></div></div></div>
+                    <div class="col product-item" data-id="6" data-price="2800" data-category="Thriller" data-title="The Silent Patient" data-author="Alex Michaelides" data-img="https://m.media-amazon.com/images/I/91p5b0UvG-L._AC_UF1000,1000_QL80_.jpg"><div class="card product-card"><button class="wishlist-btn" title="Add to Wishlist"><i class="bi bi-heart"></i></button><img src="https://m.media-amazon.com/images/I/91p5b0UvG-L._AC_UF1000,1000_QL80_.jpg" class="card-img-top" alt="The Silent Patient"><div class="card-body text-center d-flex flex-column"><h5 class="card-title">The Silent Patient</h5><p class="card-text text-muted mb-3">Alex Michaelides</p><div class="mt-auto price-actions"><p class="price">₹2,800</p><button class="btn btn-warning w-100 add-to-cart-btn">Add to Cart</button></div></div></div></div>
+                    <div class="col product-item" data-id="7" data-price="2200" data-category="Romance" data-title="The Love Hypothesis" data-author="Ali Hazelwood" data-img="https://m.media-amazon.com/images/I/715NY-bJd2L._AC_UF1000,1000_QL80_.jpg"><div class="card product-card"><button class="wishlist-btn" title="Add to Wishlist"><i class="bi bi-heart"></i></button><img src="https://m.media-amazon.com/images/I/715NY-bJd2L._AC_UF1000,1000_QL80_.jpg" class="card-img-top" alt="The Love Hypothesis"><div class="card-body text-center d-flex flex-column"><h5 class="card-title">The Love Hypothesis</h5><p class="card-text text-muted mb-3">Ali Hazelwood</p><div class="mt-auto price-actions"><p class="price">₹2,200</p><button class="btn btn-warning w-100 add-to-cart-btn">Add to Cart</button></div></div></div></div>
+                    <div class="col product-item" data-id="8" data-price="4800" data-category="History" data-title="Sapiens: A Brief History" data-author="Yuval Noah Harari" data-img="https://m.media-amazon.com/images/I/713jIoMO3UL._AC_UF1000,1000_QL80_.jpg"><div class="card product-card"><button class="wishlist-btn" title="Add to Wishlist"><i class="bi bi-heart"></i></button><img src="https://m.media-amazon.com/images/I/713jIoMO3UL._AC_UF1000,1000_QL80_.jpg" class="card-img-top" alt="Sapiens"><div class="card-body text-center d-flex flex-column"><h5 class="card-title">Sapiens: A Brief History</h5><p class="card-text text-muted mb-3">Yuval Noah Harari</p><div class="mt-auto price-actions"><p class="price">₹4,800</p><button class="btn btn-warning w-100 add-to-cart-btn">Add to Cart</button></div></div></div></div>
+                </div>
+            </section>
+        </div>
     </main>
-    
-    <!-- UNIFIED FOOTER -->
-    <footer class="footer-section mt-5">
+
+    <!-- Toast Container -->
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <strong class="me-auto">Bookory</strong>
+                <small>Just now</small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                Item added successfully!
+            </div>
+        </div>
+    </div>
+  <!-- FOOTER UPDATED -->
+    <footer class="footer-section">
         <div class="container">
-             <div class="row">
+            <div class="row">
                 <div class="col-lg-3 col-md-6 mb-4">
                     <h5>About Bookory</h5>
                     <p class="text-white-50">Your one-stop shop for all the books you love. Discover new worlds and adventures with our vast collection.</p>
@@ -225,8 +340,10 @@
                 <div class="col-lg-2 col-md-6 mb-4">
                     <h5>Quick Links</h5>
                     <ul class="list-unstyled">
-                        <li><a href="homepage.html">Home</a></li>
+                        <li><a href="#">Home</a></li>
                         <li><a href="shoppage.html">Shop</a></li>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Contact</a></li>
                     </ul>
                 </div>
                 <div class="col-lg-3 col-md-6 mb-4">
@@ -239,7 +356,7 @@
                 </div>
                 <div class="col-lg-4 col-md-6 mb-4">
                     <h5>Newsletter</h5>
-                     <p class="text-white-50">Subscribe for the latest updates.</p>
+                    <p class="text-white-50">Subscribe to our newsletter for the latest updates and offers.</p>
                     <form>
                         <div class="input-group">
                             <input type="email" class="form-control" placeholder="Your email address">
@@ -248,325 +365,208 @@
                     </form>
                 </div>
             </div>
+            <div class="social-icons mt-4">
+                <a href="#"><i class="bi bi-facebook"></i></a>
+                <a href="#"><i class="bi bi-twitter-x"></i></a>
+                <a href="#"><i class="bi bi-instagram"></i></a>
+            </div>
         </div>
     </footer>
     <div class="footer-bottom text-center text-secondary">
         <p class="mb-0">&copy; 2025 Bookory. All Rights Reserved.</p>
     </div>
-
-
+    
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
     <script>
-    $(document).ready(function() {
-        // --- DATA SOURCE ---
-        let allBooks = [];
+        $(document).ready(function(){
+            const toastEl = document.getElementById('liveToast');
+            const toast = new bootstrap.Toast(toastEl);
+            const productGrid = $('#product-grid');
 
-        // --- GLOBAL STATE ---
-        let currentView = 'grid';
-        let currentPage = 1;
-        const booksPerPage = 12;
+            // --- Badge and Wishlist State Update --- //
+            function updateBadge(badgeId, storageKey) {
+                const items = JSON.parse(localStorage.getItem(storageKey)) || [];
+                const badge = $(badgeId);
+                if (items.length > 0) {
+                    badge.text(items.length).removeClass('d-none');
+                } else {
+                    badge.addClass('d-none');
+                }
+            }
 
-        // --- GENERATE DYNAMIC BOOK DATA ---
-        function generateBooks() {
-            const categories = ["Fiction", "Science Fiction", "Thriller", "Biography", "Fantasy", "History", "Romance", "Mystery"];
-            const bookData = [
-                { title: "To Kill a Mockingbird", author: "Harper Lee", image: "https://m.media-amazon.com/images/I/81a4kCNuH+L._AC_UF1000,1000_QL80_.jpg" },
-                { title: "1984", author: "George Orwell", image: "https://m.media-amazon.com/images/I/71rpa1-hAwL._AC_UF1000,1000_QL80_.jpg" },
-                { title: "The Great Gatsby", author: "F. Scott Fitzgerald", image: "https://m.media-amazon.com/images/I/71FTb9X6wsL._AC_UF1000,1000_QL80_.jpg" },
-                { title: "Pride and Prejudice", author: "Jane Austen", image: "https://m.media-amazon.com/images/I/71Q1tPupKjL._AC_UF1000,1000_QL80_.jpg" },
-                { title: "The Catcher in the Rye", author: "J.D. Salinger", image: "https://m.media-amazon.com/images/I/91HPG31dTwL._AC_UF1000,1000_QL80_.jpg" },
-                { title: "The Lord of the Rings", author: "J.R.R. Tolkien", image: "https://m.media-amazon.com/images/I/71jLBXtWJWL._AC_UF1000,1000_QL80_.jpg" },
-                { title: "The Hobbit", author: "J.R.R. Tolkien", image: "https://m.media-amazon.com/images/I/710+HcoP38L._AC_UF1000,1000_QL80_.jpg" },
-                { title: "The Alchemist", author: "Paulo Coelho", image: "https://m.media-amazon.com/images/I/71aG+xDKSYL._AC_UF1000,1000_QL80_.jpg" },
-                { title: "The Chronicles of Narnia", author: "C.S. Lewis", image: "https://m.media-amazon.com/images/I/81f2ax+O9+L._AC_UF1000,1000_QL80_.jpg" },
-                { title: "The Da Vinci Code", author: "Dan Brown", image: "https://m.media-amazon.com/images/I/81jOT9aLpSL._AC_UF1000,1000_QL80_.jpg" },
-                { title: "Fahrenheit 451", author: "Ray Bradbury", image: "https://m.media-amazon.com/images/I/71OFqSRFDgL._AC_UF1000,1000_QL80_.jpg" },
-                { title: "Brave New World", author: "Aldous Huxley", image: "https://m.media-amazon.com/images/I/81zE42gT3xL._AC_UF1000,1000_QL80_.jpg" },
-                { title: "Moby Dick", author: "Herman Melville", image: "https://m.media-amazon.com/images/I/81v5wp2zeGL._AC_UF1000,1000_QL80_.jpg" },
-                { title: "War and Peace", author: "Leo Tolstoy", image: "https://m.media-amazon.com/images/I/711c-D03k+L._AC_UF1000,1000_QL80_.jpg" },
-                { title: "The Shining", author: "Stephen King", image: "https://m.media-amazon.com/images/I/81c+k+3myLL._AC_UF1000,1000_QL80_.jpg" }
-            ];
-
-            const titlePrefixes = ["The", "A", "One", "Last", "First", "Chronicles of the"];
-            const titleAdjectives = ["Silent", "Hidden", "Forgotten", "Lost", "Final", "Crystal", "Golden", "Iron", "Shadow", "Burning", "Whispering"];
-            const titleNouns = ["Garden", "Throne", "River", "Castle", "Voyage", "Secret", "Legacy", "Key", "Star", "Crown", "Blade", "Heart"];
-
-            for (let i = 1; i <= 200; i++) {
-                const bookInfo = bookData[(i - 1) % bookData.length];
-                const randomPrefix = titlePrefixes[Math.floor(Math.random() * titlePrefixes.length)];
-                const randomAdjective = titleAdjectives[Math.floor(Math.random() * titleAdjectives.length)];
-                const randomNoun = titleNouns[Math.floor(Math.random() * titleNouns.length)];
-
-                allBooks.push({
-                    id: i,
-                    title: i > bookData.length ? `${randomPrefix} ${randomAdjective} ${randomNoun}` : bookInfo.title,
-                    author: bookInfo.author,
-                    category: categories[i % categories.length],
-                    price: parseFloat((Math.random() * (80 - 10) + 10).toFixed(2)),
-                    rating: parseFloat((Math.random() * (5 - 2.5) + 2.5).toFixed(1)),
-                    popularity: Math.floor(Math.random() * 100),
-                    inStock: Math.random() > 0.2, // 80% chance of being in stock
-                    imageUrl: bookInfo.image,
-                    description: "A brief description of the book goes here, enticing the reader to click and learn more about this wonderful story."
+            function updateWishlistIcons() {
+                const wishlist = JSON.parse(localStorage.getItem('bookoryWishlist')) || [];
+                const wishlistIds = wishlist.map(item => item.id);
+                
+                $('.wishlist-btn').each(function() {
+                    const productId = $(this).closest('.product-item').data('id');
+                    if (wishlistIds.includes(productId)) {
+                        $(this).addClass('active').find('i').removeClass('bi-heart').addClass('bi-heart-fill');
+                    } else {
+                         $(this).removeClass('active').find('i').removeClass('bi-heart-fill').addClass('bi-heart');
+                    }
                 });
             }
-        }
-        
-        // --- DYNAMICALLY POPULATE CATEGORY FILTERS ---
-        function populateCategoryFilters() {
-            const categories = [...new Set(allBooks.map(book => book.category))].sort();
-            const container = $('#category-filters');
-            container.empty();
-            categories.forEach(cat => {
-                const catId = `cat_${cat.toLowerCase().replace(/\s/g, '')}`;
-                container.append(`
-                    <div class="form-check">
-                        <input class="form-check-input filter-checkbox" type="checkbox" value="${cat}" id="${catId}">
-                        <label class="form-check-label" for="${catId}">${cat}</label>
-                    </div>`);
-            });
-        }
-        
-        // --- RENDER BOOKS (CORE FUNCTION) ---
-        function renderBooks() {
-            const searchTerm = $('#headerSearchInput').val().toLowerCase();
-            const maxPrice = parseFloat($('#priceRange').val());
-            const minRating = parseFloat($('.rating-filter a.active').data('rating') || 0);
-            const includeOOS = $('#includeOOS').is(':checked');
-            const selectedCategories = $('.filter-checkbox:checked').map((_, el) => $(el).val()).get();
-            const sortBy = $('#sort-by').val();
-
-            let filteredBooks = allBooks.filter(book => {
-                const searchMatch = book.title.toLowerCase().includes(searchTerm) || book.author.toLowerCase().includes(searchTerm);
-                const priceMatch = book.price <= maxPrice;
-                const ratingMatch = book.rating >= minRating;
-                const stockMatch = includeOOS || book.inStock;
-                const categoryMatch = selectedCategories.length === 0 || selectedCategories.includes(book.category);
-                return searchMatch && priceMatch && ratingMatch && stockMatch && categoryMatch;
-            });
             
-            filteredBooks.sort((a, b) => {
-                switch (sortBy) {
-                    case 'price-asc': return a.price - b.price;
-                    case 'price-desc': return b.price - a.price;
-                    case 'rating': return b.rating - a.rating;
-                    case 'popularity': default: return b.popularity - a.popularity;
+            // --- Login State Management --- //
+            function updateLoginState() {
+                const user = localStorage.getItem('bookoryUser');
+                if (user) {
+                    $('#login-li').addClass('d-none');
+                    $('#user-info, #logout-li').removeClass('d-none');
+                } else {
+                    $('#login-li').removeClass('d-none');
+                    $('#user-info, #logout-li').addClass('d-none');
                 }
+            }
+
+            $('#login-btn').on('click', function(e) {
+                e.preventDefault();
+                localStorage.setItem('bookoryUser', JSON.stringify({ name: 'Guest User' }));
+                updateLoginState();
             });
 
-            const totalBooks = filteredBooks.length;
-            const totalPages = Math.ceil(totalBooks / booksPerPage);
-            const start = (currentPage - 1) * booksPerPage;
-            const end = start + booksPerPage;
-            const paginatedBooks = filteredBooks.slice(start, end);
+            $('#logout-btn').on('click', function(e) {
+                e.preventDefault();
+                localStorage.removeItem('bookoryUser');
+                updateLoginState();
+            });
 
-            const container = $('#products-list-container');
-            container.empty();
-            $('#results-count').text(`Showing ${totalBooks > 0 ? start + 1 : 0}-${Math.min(end, totalBooks)} of ${totalBooks} results`);
+            // --- Unified Product Filtering and Sorting --- //
+            function updateProductDisplay() {
+                const maxPrice = $('#priceRange').val();
+                const selectedCategory = $('.category-filter .list-group-item.active').data('category');
+                const searchTerm = $('#search-input').val().toLowerCase().trim();
+                const sortBy = $('#sort-by').val();
 
-            const wishlistItems = JSON.parse(sessionStorage.getItem('wishlistItems')) || [];
-
-            if (paginatedBooks.length === 0) {
-                container.html('<div class="col-12 text-center fs-5 text-muted py-5">No books match your criteria.</div>');
-            } else {
-                paginatedBooks.forEach(book => {
-                    const isWishlisted = wishlistItems.some(item => item.id === book.id);
-                    const cardHtml = currentView === 'grid' ? createGridCard(book, isWishlisted) : createListCard(book, isWishlisted);
-                    container.append(cardHtml);
+                const allItems = productGrid.children('.product-item').get();
+                
+                let filteredItems = allItems.filter(function(item) {
+                    const product = $(item);
+                    const priceMatch = parseInt(product.data('price')) <= parseInt(maxPrice);
+                    const categoryMatch = (selectedCategory === 'All' || product.data('category') === selectedCategory);
+                    const productTitle = product.data('title').toLowerCase();
+                    const productAuthor = product.data('author').toLowerCase();
+                    const searchMatch = (searchTerm === '' || productTitle.includes(searchTerm) || productAuthor.includes(searchTerm));
+                    return priceMatch && categoryMatch && searchMatch;
                 });
+
+                if (sortBy === 'price-asc') {
+                    filteredItems.sort((a, b) => $(a).data('price') - $(b).data('price'));
+                } else if (sortBy === 'price-desc') {
+                    filteredItems.sort((a, b) => $(b).data('price') - $(a).data('price'));
+                } else if (sortBy === 'popularity') {
+                    filteredItems.sort((a, b) => $(a).data('id') - $(b).data('id'));
+                }
+
+                productGrid.empty(); // Clear the grid before re-populating
+                filteredItems.forEach(item => productGrid.append(item));
+                
+                $('#results-count').text(`Showing ${filteredItems.length} of ${allItems.length} results`);
             }
-            renderPagination(totalPages, currentPage);
-        }
 
-        function createGridCard(book, isWishlisted) {
-            const stockOverlay = !book.inStock ? '<div class="out-of-stock-overlay"><i class="bi bi-cart-x"></i>Out of Stock</div>' : '';
-            return `
-                <div class="col">
-                    <div class="product-card-listing">
-                        <div class="book-image-container">
-                            ${stockOverlay}
-                            <a href="bookdetails.html?id=${book.id}" class="book-link"><img src="${book.imageUrl}" class="book-cover-img" alt="${book.title}" onerror="this.onerror=null;this.src='https://placehold.co/400x600/ccc/FFFFFF?text=Image+Not+Found';"></a>
-                            <button class="btn-wishlist ${isWishlisted ? 'active' : ''}" onclick="window.toggleWishlist(${book.id}, event)"><i class="bi ${isWishlisted ? 'bi-heart-fill' : 'bi-heart'}"></i></button>
-                        </div>
-                        <div class="card-body">
-                            <h5 class="card-title" title="${book.title}"><a href="book-detail.html?id=${book.id}" class="book-link">${book.title}</a></h5>
-                            <p class="card-subtitle text-muted">${book.author}</p>
-                            <div class="rating-stars my-2" style="color: var(--star-color);">${'★'.repeat(Math.round(book.rating))}${'☆'.repeat(5-Math.round(book.rating))}</div>
-                            <div class="price mt-auto">
-                                <p class="mb-2">₹${book.price.toFixed(2)}</p>
-                            </div>
-                            <button class="btn btn-sm btn-primary w-100 mt-2" onclick="window.addToCart(${book.id})" ${!book.inStock ? 'disabled' : ''}>Add to Cart</button>
-                        </div>
-                    </div>
-                </div>`;
-        }
-
-        function createListCard(book, isWishlisted) {
-            const stockOverlay = !book.inStock ? '<div class="out-of-stock-overlay"><i class="bi bi-cart-x"></i>Out of Stock</div>' : '';
-             return `
-                <div class="col-12">
-                    <div class="product-card-listing">
-                        <div class="book-image-container">
-                            ${stockOverlay}
-                             <a href="bookdetails.html?id=${book.id}" class="book-link"><img src="${book.imageUrl}" class="book-cover-img" alt="${book.title}" onerror="this.onerror=null;this.src='https://placehold.co/400x600/ccc/FFFFFF?text=Image+Not+Found';"></a>
-                            <button class="btn-wishlist ${isWishlisted ? 'active' : ''}" onclick="window.toggleWishlist(${book.id}, event)"><i class="bi ${isWishlisted ? 'bi-heart-fill' : 'bi-heart'}"></i></button>
-                        </div>
-                        <div class="card-body">
-                            <h5 class="card-title"><a href="bookdetails.html?id=${book.id}" class="book-link">${book.title}</a></h5>
-                            <p class="card-subtitle text-muted">by ${book.author}</p>
-                            <p class="description d-none d-md-block">${book.description}</p>
-                             <div class="rating-stars mb-2" style="color: var(--star-color);">${'★'.repeat(Math.round(book.rating))}${'☆'.repeat(5-Math.round(book.rating))}</div>
-                            <div class="price-actions-wrapper d-flex justify-content-between align-items-center">
-                                <p class="price mb-0">₹${book.price.toFixed(2)}</p>
-                                <div class="d-flex align-items-center gap-2">
-                                    <button class="btn btn-primary" onclick="window.addToCart(${book.id})" ${!book.inStock ? 'disabled' : ''}>Add to Cart</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>`;
-        }
-        
-        // --- PAGINATION & INTERACTION FUNCTIONS (Made global for inline onclick) ---
-        window.changePage = function(page) {
-            currentPage = page;
-            renderBooks();
-            window.scrollTo(0, 0);
-        }
-
-        window.toggleWishlist = function(bookId, event) {
-            event.preventDefault();
-            event.stopPropagation();
-            let wishlist = JSON.parse(sessionStorage.getItem('wishlistItems')) || [];
-            const book = allBooks.find(b => b.id === bookId);
-            const itemIndex = wishlist.findIndex(item => item.id === bookId);
-            if (itemIndex > -1) {
-                wishlist.splice(itemIndex, 1);
-                alert(`'${book.title}' removed from your wishlist.`);
-            } else {
-                wishlist.push(book);
-                alert(`'${book.title}' added to your wishlist! Redirecting...`);
-                window.location.href = 'wishlist.html';
+            // --- View Toggle Logic --- //
+            function setView(view) {
+                if (view === 'list') {
+                    productGrid.addClass('list-view').removeClass('row-cols-1 row-cols-md-2 row-cols-xl-4');
+                    $('#list-view-btn').addClass('active');
+                    $('#grid-view-btn').removeClass('active');
+                } else { // 'grid' is the default
+                    productGrid.removeClass('list-view').addClass('row-cols-1 row-cols-md-2 row-cols-xl-4');
+                    $('#grid-view-btn').addClass('active');
+                    $('#list-view-btn').removeClass('active');
+                }
+                localStorage.setItem('bookoryView', view);
             }
-            sessionStorage.setItem('wishlistItems', JSON.stringify(wishlist));
-            renderBooks();
-        };
-        
-        window.addToCart = function(bookId) {
-            const book = allBooks.find(b => b.id === bookId);
-            if (!book) return;
-            let cart = JSON.parse(sessionStorage.getItem('cart')) || [];
-            let existingItem = cart.find(item => item.id === bookId);
-            if (existingItem) {
-                existingItem.quantity++;
-            } else {
-                cart.push({ ...book, quantity: 1 });
-            }
-            sessionStorage.setItem('cart', JSON.stringify(cart));
-            alert(`'${book.title}' was added to your cart. Redirecting...`);
-            window.location.href = 'cart.html';
-        };
 
-        function renderPagination(totalPages, page) {
-            const paginationContainer = $('#pagination-controls');
-            paginationContainer.empty();
-            if (totalPages <= 1) return;
+            $('#grid-view-btn').on('click', () => setView('grid'));
+            $('#list-view-btn').on('click', () => setView('list'));
 
-            let li = `<li class="page-item ${page === 1 ? 'disabled' : ''}"><a class="page-link" href="#" onclick="window.changePage(${page - 1})">Previous</a></li>`;
 
-            const maxVisiblePages = 5;
-            let startPage = Math.max(1, page - Math.floor(maxVisiblePages / 2));
-            let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+            // --- Event Handlers for Actions --- //
+            productGrid.on('click', '.add-to-cart-btn', function() {
+                const productCard = $(this).closest('.product-item');
+                const product = {
+                    id: productCard.data('id'),
+                    title: productCard.data('title'),
+                    price: productCard.data('price'),
+                    img: productCard.data('img'),
+                    quantity: 1
+                };
+
+                let cart = JSON.parse(localStorage.getItem('bookoryCart')) || [];
+                const existingProduct = cart.find(item => item.id === product.id);
+
+                if (existingProduct) {
+                    existingProduct.quantity++;
+                } else {
+                    cart.push(product);
+                }
+
+                localStorage.setItem('bookoryCart', JSON.stringify(cart));
+                updateBadge('#cart-badge', 'bookoryCart');
+                $('#liveToast .toast-body').text(`"${product.title}" was added to your cart.`);
+                toast.show();
+            });
+
+            productGrid.on('click', '.wishlist-btn', function() {
+                const productCard = $(this).closest('.product-item');
+                const product = {
+                    id: productCard.data('id'),
+                    title: productCard.data('title'),
+                    price: productCard.data('price'),
+                    img: productCard.data('img')
+                };
+                
+                let wishlist = JSON.parse(localStorage.getItem('bookoryWishlist')) || [];
+                const existingIndex = wishlist.findIndex(item => item.id === product.id);
+
+                if (existingIndex > -1) {
+                    wishlist.splice(existingIndex, 1);
+                    $(this).removeClass('active').find('i').removeClass('bi-heart-fill').addClass('bi-heart');
+                    $('#liveToast .toast-body').text(`"${product.title}" was removed from your wishlist.`);
+                } else {
+                    wishlist.push(product);
+                    $(this).addClass('active').find('i').removeClass('bi-heart').addClass('bi-heart-fill');
+                    $('#liveToast .toast-body').text(`"${product.title}" was added to your wishlist.`);
+                }
+
+                localStorage.setItem('bookoryWishlist', JSON.stringify(wishlist));
+                updateBadge('#wishlist-badge', 'bookoryWishlist');
+                toast.show();
+            });
             
-            if(endPage - startPage + 1 < maxVisiblePages){
-                startPage = Math.max(1, endPage - maxVisiblePages + 1);
-            }
+            // --- Event Handlers for Filters and Sorting --- //
+            $('#search-input').on('keyup', updateProductDisplay);
 
-            if (startPage > 1) {
-                li += `<li class="page-item"><a class="page-link" href="#" onclick="window.changePage(1)">1</a></li>`;
-                if (startPage > 2) {
-                    li += `<li class="page-item disabled"><span class="page-link">...</span></li>`;
-                }
-            }
+            $('#priceRange').on('input', function() {
+                let price = $(this).val();
+                let formattedPrice = new Intl.NumberFormat('en-IN').format(price);
+                $('#price-value').text('₹' + formattedPrice);
+                updateProductDisplay();
+            });
 
-            for (let i = startPage; i <= endPage; i++) {
-                li += `<li class="page-item ${i === page ? 'active' : ''}"><a class="page-link" href="#" onclick="window.changePage(${i})">${i}</a></li>`;
-            }
-
-            if (endPage < totalPages) {
-                if (endPage < totalPages - 1) {
-                    li += `<li class="page-item disabled"><span class="page-link">...</span></li>`;
-                }
-                li += `<li class="page-item"><a class="page-link" href="#" onclick="window.changePage(${totalPages})">${totalPages}</a></li>`;
-            }
-
-            li += `<li class="page-item ${page === totalPages ? 'disabled' : ''}"><a class="page-link" href="#" onclick="window.changePage(${page + 1})">Next</a></li>`;
-            paginationContainer.html(li);
-        }
-
-
-        // --- LOGIN/LOGOUT UI LOGIC ---
-        function updateNavUI() {
-            if (sessionStorage.getItem('isLoggedIn') === 'true') {
-                $('.login-nav-item').addClass('d-none');
-                $('.user-nav-item').removeClass('d-none').find('.dropdown-toggle').html(`<i class="bi bi-person-circle me-1"></i> ${sessionStorage.getItem('userName') || 'User'}`);
-            } else {
-                $('.login-nav-item').removeClass('d-none');
-                $('.user-nav-item').addClass('d-none');
-            }
-        }
-        
-        // --- EVENT LISTENERS ---
-        $('#priceRange').on('input', function() {
-            $('.price-range-display').text(`Price: ₹0 - ₹${$(this).val()}`);
-        }).on('change', () => { currentPage = 1; renderBooks(); });
-
-        $('#category-filters').on('change', '.filter-checkbox', () => { currentPage = 1; renderBooks(); });
-        $('#includeOOS, #sort-by').on('change', () => { currentPage = 1; renderBooks(); });
-        $('#headerSearchInput').on('keyup', () => { currentPage = 1; renderBooks(); });
-
-        $('.rating-filter a').on('click', function(e) {
-            e.preventDefault();
-            if($(this).hasClass('active') && $(this).data('rating') != 0) {
-                $(this).removeClass('active');
-            } else {
-                $('.rating-filter a').removeClass('active');
+            $('.category-filter .list-group-item').on('click', function(e) {
+                e.preventDefault();
+                $('.category-filter .list-group-item').removeClass('active');
                 $(this).addClass('active');
-            }
-            currentPage = 1;
-            renderBooks();
-        });
+                updateProductDisplay();
+            });
 
-        $('.view-toggle').on('click', function() {
-            currentView = $(this).data('view');
-            $('.view-toggle').removeClass('active');
-            $(this).addClass('active');
-            const container = $('#products-list-container');
-            container.removeClass('grid-view list-view');
+            $('#sort-by').on('change', updateProductDisplay);
             
-            if (currentView === 'list') {
-                container.addClass('list-view').removeClass('row-cols-sm-2 row-cols-lg-3 row-cols-xl-4');
-            } else {
-                container.addClass('grid-view').addClass('row-cols-sm-2 row-cols-lg-3 row-cols-xl-4');
-            }
-            renderBooks();
+            // --- Initial setup on page load --- //
+            const savedView = localStorage.getItem('bookoryView') || 'grid';
+            setView(savedView);
+            updateLoginState();
+            updateBadge('#cart-badge', 'bookoryCart');
+            updateBadge('#wishlist-badge', 'bookoryWishlist');
+            updateWishlistIcons();
+            updateProductDisplay();
         });
-
-        $('#logout-link').on('click', function(e) {
-            e.preventDefault();
-            sessionStorage.clear();
-            updateNavUI();
-            currentPage = 1;
-            renderBooks();
-        });
-
-        // --- INITIAL LOAD ---
-        generateBooks();
-        populateCategoryFilters();
-        updateNavUI();
-        renderBooks();
-    });
     </script>
+
 </body>
 </html>

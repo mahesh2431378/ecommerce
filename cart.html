@@ -3,281 +3,265 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Cart - Bookory</title>
-    <!-- Bootstrap CSS -->
+    <title>Shopping Cart - Bookory</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <!-- Google Fonts: Poppins -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --accent-orange: #FF6600;
-            --dark-text: #2c3e50;
-            --secondary-text-color: #6c757d;
-            --card-bg: #ffffff;
-            --bg-light: #f7f9fc;
-            --border-color: #e9ecef;
-            --success-green: #28a745;
+        :root { 
+            --bs-primary: #F97316; 
+            --bs-primary-rgb: 249, 115, 22;
+            --bs-light: #f8f9fa; 
         }
-
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: var(--bg-light);
-            color: var(--dark-text);
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: #fff; 
         }
-
-        .text-primary { color: var(--accent-orange) !important; }
-        .btn-primary { background-color: var(--accent-orange); border-color: var(--accent-orange); }
-        .btn-primary:hover { background-color: #e65c00; border-color: #e65c00; }
-        .navbar-brand { font-weight: 700; font-size: 1.5rem; }
-
-        /* Cart Page Specific Styles */
-        .cart-item-card {
-            background-color: var(--card-bg);
-            border-radius: 8px;
-            padding: 1.5rem;
-            margin-bottom: 1rem;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        .navbar-brand { 
+            font-weight: 700; 
+            font-size: 1.75rem; 
+            color: var(--bs-primary); 
         }
-        .cart-item-card img {
-            width: 90px;
-            height: 120px;
-            object-fit: cover;
-            border-radius: 4px;
+        .btn-primary { 
+            background-color: var(--bs-primary); 
+            border-color: var(--bs-primary); 
         }
-        .item-actions a {
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 0.9rem;
-            text-transform: uppercase;
+        .btn-primary:hover { 
+            background-color: #EA580C; 
+            border-color: #EA580C; 
         }
-        .quantity-selector {
-            display: flex;
-            align-items: center;
-        }
-        .quantity-selector .btn {
-            border-radius: 50%;
-            width: 32px;
-            height: 32px;
-            padding: 0;
-            font-weight: 600;
-        }
-        .quantity-selector .form-control {
-            max-width: 50px;
-            text-align: center;
-            border: none;
-            box-shadow: none;
-            font-weight: 500;
+        .cart-item img { 
+            width: 80px; 
+            height: 120px; 
+            object-fit: cover; 
+            border-radius: 0.25rem;
         }
         .summary-card {
-            background-color: var(--card-bg);
-            border-radius: 8px;
-            padding: 1.5rem;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 80px;
         }
-        .summary-card h5 {
+
+         /* --- Footer Styles --- */
+        .footer-section {
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            padding: 3rem 0;
+        }
+        .footer-section h5 {
             font-weight: 600;
-            color: var(--secondary-text-color);
-            text-transform: uppercase;
-            font-size: 1rem;
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 1rem;
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
+            color: #fff;
         }
-        .summary-card .d-flex span:last-child {
-            font-weight: 500;
+        .footer-section .list-unstyled li {
+            margin-bottom: 0.75rem;
+        }
+        .footer-section .list-unstyled a {
+            color: #bdc3c7; /* Light gray for links */
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+        .footer-section .list-unstyled a:hover {
+            color: #FF6600;
+        }
+        .footer-section .social-icons a {
+            font-size: 1.5rem;
+            margin-right: 1rem;
+            color: #bdc3c7;
+            transition: color 0.2s ease;
+        }
+        .footer-section .social-icons a:hover {
+            color: #FF6600;
+        }
+        .footer-bottom {
+            background-color: #233140;
+            padding: 1rem 0;
+            border-top: 1px solid #34495e;
         }
     </style>
 </head>
 <body>
 
-    <header class="bg-white sticky-top shadow-sm">
-        <nav class="navbar navbar-expand-lg">
-            <div class="container-fluid px-md-4">
-                <a class="navbar-brand text-primary me-4" href="homepage.html">Bookory</a>
-                <div class="collapse navbar-collapse" id="mainNavbar">
-                    <ul class="navbar-nav ms-auto d-flex align-items-center">
-                         <li class="nav-item dropdown user-nav-item">
-                            <a class="nav-link dropdown-toggle fw-medium" href="#" role="button" data-bs-toggle="dropdown"><i class="bi bi-person-circle me-1"></i> User</a>
-                            <ul class="dropdown-menu dropdown-menu-end">
-                                <li><a class="dropdown-item" href="myprofile.html"><i class="bi bi-person me-2"></i> My Profile</a></li>
-                                <li><a class="dropdown-item" href="#" id="logout-link"><i class="bi bi-box-arrow-right me-2"></i> Logout</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
+    <header class="navbar navbar-expand-lg navbar-light bg-white sticky-top border-bottom">
+        <div class="container">
+            <a class="navbar-brand" href="homepage.html">Bookory</a>
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="homepage.html">
+                        <i class="bi bi-arrow-left"></i> Back to Shop
+                    </a>
+                </li>
+            </ul>
+        </div>
     </header>
 
-    <main class="container py-5">
-        <h2 class="mb-4 fw-bold">My Cart</h2>
-        <div class="row g-4">
-            <!-- Cart Items -->
+    <main class="container my-5">
+        <div class="row">
             <div class="col-lg-8">
+                <h2 class="mb-4">Your Shopping Cart</h2>
                 <div id="cart-items-container">
-                    <!-- Cart items will be dynamically inserted here -->
+                    <!-- Cart items will be dynamically injected here by jQuery -->
                 </div>
             </div>
-
-            <!-- Order Summary -->
             <div class="col-lg-4">
-                <aside class="summary-card">
-                    <h5>Price Details</h5>
-                    <div class="d-flex justify-content-between mb-2">
-                        <span>Price (<span id="summary-item-count">0</span> items)</span>
-                        <span id="summary-subtotal">₹0.00</span>
+                <div class="card summary-card shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title mb-3">Order Summary</h5>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item d-flex justify-content-between px-0">
+                                <span>Subtotal</span>
+                                <span id="subtotal">₹0.00</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between px-0">
+                                <span>Shipping</span>
+                                <span>FREE</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between fw-bold fs-5 px-0">
+                                <span>Total</span>
+                                <span id="total-price">₹0.00</span>
+                            </li>
+                        </ul>
+                        <button class="btn btn-primary w-100 mt-3"><a href="checkout.html" class="text-decoration-none text-white">Proceed to Checkout</a></button>
                     </div>
-                    <div class="d-flex justify-content-between mb-2">
-                        <span>Discount</span>
-                        <span id="summary-discount" class="text-success">₹0.00</span>
-                    </div>
-                    <div class="d-flex justify-content-between mb-3">
-                        <span>Delivery Charges</span>
-                        <span id="summary-shipping" class="text-success">Free</span>
-                    </div>
-                    <hr>
-                    <div class="d-flex justify-content-between fw-bold fs-5 mb-3">
-                        <span>Total Amount</span>
-                        <span id="summary-total">₹0.00</span>
-                    </div>
-                     <p id="summary-savings" class="text-success fw-medium text-center">You will save ₹0.00 on this order</p>
-                    <div class="d-grid mt-3">
-                        <button class="btn btn-primary btn-lg"><a class="text-decoration-none text-white" href="checkout.html">Place Order</a></button>
-                    </div>
-                </aside>
+                </div>
             </div>
         </div>
     </main>
+      <!-- FOOTER UPDATED -->
+    <footer class="footer-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h5>About Bookory</h5>
+                    <p class="text-white-50">Your one-stop shop for all the books you love. Discover new worlds and adventures with our vast collection.</p>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#">Home</a></li>
+                        <li><a href="shoppage.html">Shop</a></li>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h5>Contact Us</h5>
+                    <ul class="list-unstyled text-white-50">
+                        <li><i class="bi bi-geo-alt-fill me-2"></i>123 Book Lane, Readville</li>
+                        <li><i class="bi bi-telephone-fill me-2"></i>(123) 456-7890</li>
+                        <li><i class="bi bi-envelope-fill me-2"></i>support@bookory.com</li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <h5>Newsletter</h5>
+                    <p class="text-white-50">Subscribe to our newsletter for the latest updates and offers.</p>
+                    <form>
+                        <div class="input-group">
+                            <input type="email" class="form-control" placeholder="Your email address">
+                            <button class="btn btn-primary" type="button">Subscribe</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="social-icons mt-4">
+                <a href="#"><i class="bi bi-facebook"></i></a>
+                <a href="#"><i class="bi bi-twitter-x"></i></a>
+                <a href="#"><i class="bi bi-instagram"></i></a>
+            </div>
+        </div>
+    </footer>
+    <div class="footer-bottom text-center text-secondary">
+        <p class="mb-0">&copy; 2025 Bookory. All Rights Reserved.</p>
+    </div>
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-    $(document).ready(function() {
-        // Redirect if not logged in
-        if (localStorage.getItem('isLoggedIn') == false) {
-            window.location.href = 'login.html';
-            return;
-        }
+        $(document).ready(function() {
+            const cartStorageKey = 'bookoryCart';
 
-        const cartItemsContainer = $('#cart-items-container');
-        
-        function renderCart() {
-            const cart = JSON.parse(localStorage.getItem('cart')) || [];
-            cartItemsContainer.empty();
+            function renderCart() {
+                const cart = JSON.parse(localStorage.getItem(cartStorageKey)) || [];
+                const container = $('#cart-items-container');
+                container.empty();
+                let subtotal = 0;
 
-            if (cart.length === 0) {
-                cartItemsContainer.html('<div class="cart-item-card text-center"><p class="mb-0">Your cart is empty. <a href="shoppage.html">Continue Shopping</a></p></div>');
-                updateSummary([]);
-                return;
-            }
+                if (cart.length === 0) {
+                    container.html('<div class="alert alert-info">Your cart is empty. <a href="shoppage.html" class="alert-link">Continue shopping</a>.</div>');
+                    updateTotal(0);
+                    return;
+                }
 
-            cart.forEach((item, index) => {
-                const originalPrice = (item.price * 1.25); // Simulate a 25% markup for discount
-                const discount = ((originalPrice - item.price) / originalPrice * 100).toFixed(0);
-
-                const itemHtml = `
-                    <div class="cart-item-card">
-                        <div class="row">
-                            <div class="col-md-2 text-center">
-                                <img src="https://placehold.co/100x150/A68F81/FFFFFF?text=Book" alt="${item.title}">
-                            </div>
-                            <div class="col-md-10">
-                                <div class="d-flex justify-content-between">
-                                    <div>
-                                        <h6 class="mb-1">${item.title}</h6>
-                                        <p class="text-muted small mb-1">by ${item.author}</p>
-                                        <p class="text-muted small mb-2">Binding: ${item.binding}</p>
-                                        <div class="d-flex align-items-center">
-                                            <span class="fw-bold fs-5 me-2">₹${item.price.toFixed(2)}</span>
-                                            <span class="text-decoration-line-through text-muted me-2">₹${originalPrice.toFixed(2)}</span>
-                                            <span class="text-success fw-medium">${discount}% off</span>
+                cart.forEach(item => {
+                    const itemTotal = item.price * item.quantity;
+                    subtotal += itemTotal;
+                    const itemHtml = `
+                        <div class="card mb-3 cart-item" data-id="${item.id}">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="d-flex flex-row align-items-center">
+                                        <div>
+                                            <img src="${item.img || 'https://placehold.co/80x120/f8f9fa/6c757d?text=No+Image'}" class="img-fluid" alt="${item.title}">
+                                        </div>
+                                        <div class="ms-3">
+                                            <h5 class="mb-0">${item.title}</h5>
+                                            <p class="small mb-0">Price: ₹${Number(item.price).toLocaleString('en-IN')}</p>
                                         </div>
                                     </div>
-                                    <div class="quantity-selector">
-                                        <button class="btn btn-outline-secondary btn-decrease" data-index="${index}">-</button>
-                                        <input type="text" class="form-control text-center fw-bold" value="${item.quantity}" readonly>
-                                        <button class="btn btn-outline-secondary btn-increase" data-index="${index}">+</button>
+                                    <div class="d-flex flex-row align-items-center">
+                                        <div style="width: 120px;">
+                                            <input type="number" min="1" value="${item.quantity}" class="form-control form-control-sm quantity-input"/>
+                                        </div>
+                                        <div style="width: 100px;" class="ms-4 text-end">
+                                            <h5 class="mb-0">₹${itemTotal.toLocaleString('en-IN')}</h5>
+                                        </div>
+                                        <a href="#!" class="ms-4 text-danger remove-item" title="Remove item"><i class="bi bi-trash-fill fs-5"></i></a>
                                     </div>
                                 </div>
-                                <hr class="my-2">
-                                <div class="item-actions">
-                                    <a href="#" class="text-uppercase me-3 btn-remove" data-index="${index}">Remove</a>
-                                    <a href="wishlist.html" class="text-uppercase">Move to Wishlist</a>
-                                </div>
                             </div>
-                        </div>
-                    </div>`;
-                cartItemsContainer.append(itemHtml);
-            });
-            
-            updateSummary(cart);
-        }
-
-        function updateSummary(cart) {
-            let subtotal = 0;
-            let totalOriginalPrice = 0;
-            
-            cart.forEach(item => {
-                subtotal += item.price * item.quantity;
-                totalOriginalPrice += (item.price * 1.25) * item.quantity;
-            });
-            
-            const totalDiscount = totalOriginalPrice - subtotal;
-            
-            $('#summary-item-count').text(cart.length);
-            $('#summary-subtotal').text(`₹${totalOriginalPrice.toFixed(2)}`);
-            $('#summary-discount').text(`₹${totalDiscount.toFixed(2)}`);
-            $('#summary-total').text(`₹${subtotal.toFixed(2)}`);
-
-            if (totalDiscount > 0) {
-                 $('#summary-savings').text(`You will save ₹${totalDiscount.toFixed(2)} on this order`).removeClass('d-none');
-            } else {
-                 $('#summary-savings').addClass('d-none');
+                        </div>`;
+                    container.append(itemHtml);
+                });
+                updateTotal(subtotal);
             }
-        }
-        
-        function updateCart(index, newQuantity) {
-             let cart = JSON.parse(localStorage.getItem('cart')) || [];
-             if (newQuantity <= 0) {
-                 cart.splice(index, 1); // Remove item if quantity is 0 or less
-             } else {
-                 cart[index].quantity = newQuantity;
-             }
-             localStorage.setItem('cart', JSON.stringify(cart));
-             renderCart();
-        }
 
-        // --- Event Listeners ---
-        cartItemsContainer.on('click', '.btn-increase', function() {
-            const index = $(this).data('index');
-            let cart = JSON.parse(localStorage.getItem('cart'));
-            updateCart(index, cart[index].quantity + 1);
-        });
-        
-        cartItemsContainer.on('click', '.btn-decrease', function() {
-            const index = $(this).data('index');
-            let cart = JSON.parse(localStorage.getItem('cart'));
-            updateCart(index, cart[index].quantity - 1);
-        });
+            function updateTotal(subtotal) {
+                const formattedSubtotal = `₹${subtotal.toLocaleString('en-IN')}`;
+                $('#subtotal').text(formattedSubtotal);
+                $('#total-price').text(formattedSubtotal);
+            }
+            
+            function updateQuantity(productId, newQuantity) {
+                let cart = JSON.parse(localStorage.getItem(cartStorageKey)) || [];
+                const product = cart.find(item => item.id == productId);
+                if (product && newQuantity > 0) {
+                    product.quantity = parseInt(newQuantity);
+                    localStorage.setItem(cartStorageKey, JSON.stringify(cart));
+                    renderCart();
+                }
+            }
 
-        cartItemsContainer.on('click', '.btn-remove', function(e) {
-            e.preventDefault();
-            const index = $(this).data('index');
-            updateCart(index, 0);
-        });
+            function removeItem(productId) {
+                let cart = JSON.parse(localStorage.getItem(cartStorageKey)) || [];
+                cart = cart.filter(item => item.id != productId);
+                localStorage.setItem(cartStorageKey, JSON.stringify(cart));
+                renderCart();
+            }
 
-        // Logout
-        $('#logout-link').on('click', function(e) {
-            e.preventDefault();
-            localStorage.clear();
-            window.location.href = 'login.html';
-        });
+            // Event Handlers
+            $('#cart-items-container').on('change', '.quantity-input', function() {
+                const productId = $(this).closest('.cart-item').data('id');
+                const newQuantity = $(this).val();
+                updateQuantity(productId, newQuantity);
+            });
 
-        // Initial render
-        renderCart();
-    });
+            $('#cart-items-container').on('click', '.remove-item', function(e) {
+                e.preventDefault();
+                const productId = $(this).closest('.cart-item').data('id');
+                removeItem(productId);
+            });
+
+            // Initial Render on page load
+            renderCart();
+        });
     </script>
 </body>
 </html>
