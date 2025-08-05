@@ -47,6 +47,43 @@
     .form-label {
       font-weight: 500;
     }
+
+  /* --- Footer Styles --- */
+    .footer-section {
+        background-color: #2c3e50; /* Dark, warm brown to match the page theme */
+        color: #fdf5e6; /* A warm off-white for text */
+        padding: 3rem 0;
+    }
+    .footer-section h5 {
+        font-weight: 600;
+        margin-bottom: 1.5rem;
+        color: #fff;
+    }
+    .footer-section .list-unstyled li {
+        margin-bottom: 0.75rem;
+    }
+    .footer-section .list-unstyled a {
+        color: #f3d9b1; /* Light, warm beige for links */
+        text-decoration: none;
+        transition: color 0.2s ease;
+    }
+    .footer-section .list-unstyled a:hover {
+        color: #FF8C00; /* A slightly deeper orange on hover */
+    }
+    .footer-section .social-icons a {
+        font-size: 1.5rem;
+        margin-right: 1rem;
+        color: #f3d9b1; /* Matching the link color */
+        transition: color 0.2s ease;
+    }
+    .footer-section .social-icons a:hover {
+        color: #FF8C00;
+    }
+    .footer-bottom {
+        background-color: #fff1e6; /* Matches the card background */
+        padding: 1rem 0;
+        border-top: 1px solid #4a2c2a; /* Border color matches the new footer background */
+    }
   </style>
 </head>
 <body>
@@ -151,6 +188,52 @@
       </div>
     </div>
   </div>
+     <!-- FOOTER UPDATED -->
+    <footer class="footer-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h5>About Bookory</h5>
+                    <p>Your one-stop shop for all the books you love. Discover new worlds and adventures with our vast collection.</p>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#">Home</a></li>
+                        <li><a href="shoppage.html">Shop</a></li>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h5>Contact Us</h5>
+                    <ul class="list-unstyled">
+                        <li><i class="bi bi-geo-alt-fill me-2"></i>123 Book Lane, Readville</li>
+                        <li><i class="bi bi-telephone-fill me-2"></i>(123) 456-7890</li>
+                        <li><i class="bi bi-envelope-fill me-2"></i>support@bookory.com</li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <h5>Newsletter</h5>
+                    <p>Subscribe to our newsletter for the latest updates and offers.</p>
+                    <form>
+                        <div class="input-group">
+                            <input type="email" class="form-control" placeholder="Your email address">
+                            <button class="btn btn-primary" type="button">Subscribe</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="social-icons mt-4">
+                <a href="#"><i class="bi bi-facebook"></i></a>
+                <a href="#"><i class="bi bi-twitter-x"></i></a>
+                <a href="#"><i class="bi bi-instagram"></i></a>
+            </div>
+        </div>
+    </footer>
+    <div class="footer-bottom text-center text-secondary">
+        <p class="mb-0">&copy; 2025 Bookory. All Rights Reserved.</p>
+    </div>
 
   <!-- Validation Script -->
   <script>
