@@ -4,18 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bookory - Online Bookstore</title>
-
+ 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    
+   
     <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-
+ 
     <!-- Custom Google Font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-
+ 
     <style>
         /* Orange and White Theme */
         :root {
@@ -24,12 +24,12 @@
             --bs-light: #f8f9fa;
             --bs-dark: #343a40;
         }
-
+ 
         body {
             background-color: #fff;
             font-family: 'Inter', sans-serif;
         }
-
+ 
         /* Navbar */
         .navbar {
             border-bottom: 1px solid #dee2e6;
@@ -45,8 +45,8 @@
             right: -5px;
             font-size: 0.6em;
         }
-
-
+ 
+ 
         /* Buttons */
         .btn-primary {
             background-color: var(--bs-primary);
@@ -66,7 +66,7 @@
             background-color: #EA580C;
             border-color: #EA580C;
         }
-
+ 
         /* Filters */
         .filter-section {
             padding: 1.5rem;
@@ -85,7 +85,7 @@
         .form-range::-moz-range-thumb {
             background-color: var(--bs-primary);
         }
-
+ 
         /* Product Card - Grid View (Default) */
         .product-card {
             border: 1px solid #e9ecef;
@@ -121,7 +121,7 @@
         .wishlist-btn:hover, .wishlist-btn.active {
             background-color: #e83e8c; color: #fff; border-color: #e83e8c;
         }
-
+ 
         /* Top Bar & View Toggle */
         .top-bar {
             background-color: var(--bs-light);
@@ -137,7 +137,7 @@
             background-color: var(--bs-primary);
             border-color: var(--bs-primary);
         }
-        
+       
         /* List View Styles */
         #product-grid.list-view .product-item {
             width: 100%; /* Each item takes full width */
@@ -169,14 +169,14 @@
         #product-grid.list-view .add-to-cart-btn {
             min-width: 120px;
         }
-
-
+ 
+ 
         /* Toast Notification */
         .toast-container {
             z-index: 1090;
         }
-
-
+ 
+ 
          /* --- Footer Styles --- */
         .footer-section {
             background-color: #2c3e50;
@@ -216,7 +216,7 @@
     </style>
 </head>
 <body>
-
+ 
     <header class="navbar navbar-expand-lg navbar-light bg-white sticky-top">
         <div class="container">
             <a class="navbar-brand" href="homepage.html">Bookory</a>
@@ -245,7 +245,7 @@
             </div>
         </div>
     </header>
-
+ 
     <main class="container my-5">
         <div class="row">
             <aside class="col-lg-3">
@@ -256,21 +256,12 @@
                         <h6>Category</h6>
                         <div class="list-group category-filter">
                              <a href="#" class="list-group-item list-group-item-action active" data-category="All">All Categories</a>
-                            <a href="#" class="list-group-item list-group-item-action" data-category="Biography">Biography</a>
-                            <a href="#" class="list-group-item list-group-item-action" data-category="Business">Business</a>
-                            <a href="#" class="list-group-item list-group-item-action" data-category="Comics">Comics</a>
-                            <a href="#" class="list-group-item list-group-item-action" data-category="Cooking">Cooking</a>
                             <a href="#" class="list-group-item list-group-item-action" data-category="Fantasy">Fantasy</a>
                             <a href="#" class="list-group-item list-group-item-action" data-category="Fiction">Fiction</a>
                             <a href="#" class="list-group-item list-group-item-action" data-category="History">History</a>
                             <a href="#" class="list-group-item list-group-item-action" data-category="Mystery">Mystery</a>
-                            <a href="#" class="list-group-item list-group-item-action" data-category="Poetry">Poetry</a>
-                            <a href="#" class="list-group-item list-group-item-action" data-category="Romance">Romance</a>
                             <a href="#" class="list-group-item list-group-item-action" data-category="Sci-Fi">Sci-Fi</a>
-                            <a href="#" class="list-group-item list-group-item-action" data-category="Science">Science</a>
-                            <a href="#" class="list-group-item list-group-item-action" data-category="Self-Help">Self-Help</a>
                             <a href="#" class="list-group-item list-group-item-action" data-category="Thriller">Thriller</a>
-                            <a href="#" class="list-group-item list-group-item-action" data-category="Travel">Travel</a>
                         </div>
                     </div>
                     <div class="mb-4">
@@ -286,7 +277,7 @@
                     </div>
                 </div>
             </aside>
-
+ 
             <section class="col-lg-9">
                 <div class="top-bar d-flex justify-content-between align-items-center mb-4">
                     <div class="btn-group view-toggle" role="group">
@@ -300,22 +291,112 @@
                         <option value="price-desc">Price: High to Low</option>
                     </select>
                 </div>
-
+ 
                 <div id="product-grid" class="row row-cols-1 row-cols-md-2 row-cols-xl-4 g-4">
                     <!-- Product items will be dynamically added, filtered, and sorted here -->
-                    <div class="col product-item" data-id="1" data-price="5571" data-category="Fantasy" data-title="The Lord of the Rings" data-author="J.R.R. Tolkien" data-img="https://m.media-amazon.com/images/I/71jLBXtWJWL._AC_UF1000,1000_QL80_.jpg"><div class="card product-card"><button class="wishlist-btn" title="Add to Wishlist"><i class="bi bi-heart"></i></button><img src="https://m.media-amazon.com/images/I/71jLBXtWJWL._AC_UF1000,1000_QL80_.jpg" class="card-img-top" alt="The Lord of the Rings"><div class="card-body text-center d-flex flex-column"><h5 class="card-title">The Lord of the Rings</h5><p class="card-text text-muted mb-3">J.R.R. Tolkien</p><div class="mt-auto price-actions"><p class="price">₹5,571</p><button class="btn btn-warning w-100 add-to-cart-btn">Add to Cart</button></div></div></div></div>
-                    <div class="col product-item" data-id="2" data-price="6993" data-category="Fiction" data-title="One Golden Key" data-author="Herman Melville" data-img=""><div class="card product-card"><button class="wishlist-btn" title="Add to Wishlist"><i class="bi bi-heart"></i></button><div class="card-img-top d-flex align-items-center justify-content-center"><span>Image Not Found</span></div><div class="card-body text-center d-flex flex-column"><h5 class="card-title">One Golden Key</h5><p class="card-text text-muted mb-3">Herman Melville</p><div class="mt-auto price-actions"><p class="price">₹6,993</p><button class="btn btn-warning w-100 add-to-cart-btn">Add to Cart</button></div></div></div></div>
-                    <div class="col product-item" data-id="3" data-price="1806" data-category="Mystery" data-title="Pride and Prejudice" data-author="Jane Austen" data-img="https://m.media-amazon.com/images/I/71Q1tPupKjL._AC_UF1000,1000_QL80_.jpg"><div class="card product-card"><button class="wishlist-btn" title="Add to Wishlist"><i class="bi bi-heart"></i></button><img src="https://m.media-amazon.com/images/I/71Q1tPupKjL._AC_UF1000,1000_QL80_.jpg" class="card-img-top" alt="Pride and Prejudice"><div class="card-body text-center d-flex flex-column"><h5 class="card-title">Pride and Prejudice</h5><p class="card-text text-muted mb-3">Jane Austen</p><div class="mt-auto price-actions"><p class="price">₹1,806</p><button class="btn btn-warning w-100 add-to-cart-btn">Add to Cart</button></div></div></div></div>
-                    <div class="col product-item" data-id="4" data-price="4550" data-category="Fiction" data-title="The Catcher in the Rye" data-author="J. D. Salinger" data-img="https://m.media-amazon.com/images/I/8125BDg3l0L._AC_UF1000,1000_QL80_.jpg"><div class="card product-card"><button class="wishlist-btn" title="Add to Wishlist"><i class="bi bi-heart"></i></button><img src="https://m.media-amazon.com/images/I/8125BDg3l0L._AC_UF1000,1000_QL80_.jpg" class="card-img-top" alt="The Catcher in the Rye"><div class="card-body text-center d-flex flex-column"><h5 class="card-title">The Catcher in the Rye</h5><p class="card-text text-muted mb-3">J. D. Salinger</p><div class="mt-auto price-actions"><p class="price">₹4,550</p><button class="btn btn-warning w-100 add-to-cart-btn">Add to Cart</button></div></div></div></div>
-                    <div class="col product-item" data-id="5" data-price="3500" data-category="Sci-Fi" data-title="Dune" data-author="Frank Herbert" data-img="https://m.media-amazon.com/images/I/81ym3QUd3KL._AC_UF1000,1000_QL80_.jpg"><div class="card product-card"><button class="wishlist-btn" title="Add to Wishlist"><i class="bi bi-heart"></i></button><img src="https://m.media-amazon.com/images/I/81ym3QUd3KL._AC_UF1000,1000_QL80_.jpg" class="card-img-top" alt="Dune"><div class="card-body text-center d-flex flex-column"><h5 class="card-title">Dune</h5><p class="card-text text-muted mb-3">Frank Herbert</p><div class="mt-auto price-actions"><p class="price">₹3,500</p><button class="btn btn-warning w-100 add-to-cart-btn">Add to Cart</button></div></div></div></div>
-                    <div class="col product-item" data-id="6" data-price="2800" data-category="Thriller" data-title="The Silent Patient" data-author="Alex Michaelides" data-img="https://m.media-amazon.com/images/I/91p5b0UvG-L._AC_UF1000,1000_QL80_.jpg"><div class="card product-card"><button class="wishlist-btn" title="Add to Wishlist"><i class="bi bi-heart"></i></button><img src="https://m.media-amazon.com/images/I/91p5b0UvG-L._AC_UF1000,1000_QL80_.jpg" class="card-img-top" alt="The Silent Patient"><div class="card-body text-center d-flex flex-column"><h5 class="card-title">The Silent Patient</h5><p class="card-text text-muted mb-3">Alex Michaelides</p><div class="mt-auto price-actions"><p class="price">₹2,800</p><button class="btn btn-warning w-100 add-to-cart-btn">Add to Cart</button></div></div></div></div>
-                    <div class="col product-item" data-id="7" data-price="2200" data-category="Romance" data-title="The Love Hypothesis" data-author="Ali Hazelwood" data-img="https://m.media-amazon.com/images/I/715NY-bJd2L._AC_UF1000,1000_QL80_.jpg"><div class="card product-card"><button class="wishlist-btn" title="Add to Wishlist"><i class="bi bi-heart"></i></button><img src="https://m.media-amazon.com/images/I/715NY-bJd2L._AC_UF1000,1000_QL80_.jpg" class="card-img-top" alt="The Love Hypothesis"><div class="card-body text-center d-flex flex-column"><h5 class="card-title">The Love Hypothesis</h5><p class="card-text text-muted mb-3">Ali Hazelwood</p><div class="mt-auto price-actions"><p class="price">₹2,200</p><button class="btn btn-warning w-100 add-to-cart-btn">Add to Cart</button></div></div></div></div>
-                    <div class="col product-item" data-id="8" data-price="4800" data-category="History" data-title="Sapiens: A Brief History" data-author="Yuval Noah Harari" data-img="https://m.media-amazon.com/images/I/713jIoMO3UL._AC_UF1000,1000_QL80_.jpg"><div class="card product-card"><button class="wishlist-btn" title="Add to Wishlist"><i class="bi bi-heart"></i></button><img src="https://m.media-amazon.com/images/I/713jIoMO3UL._AC_UF1000,1000_QL80_.jpg" class="card-img-top" alt="Sapiens"><div class="card-body text-center d-flex flex-column"><h5 class="card-title">Sapiens: A Brief History</h5><p class="card-text text-muted mb-3">Yuval Noah Harari</p><div class="mt-auto price-actions"><p class="price">₹4,800</p><button class="btn btn-warning w-100 add-to-cart-btn">Add to Cart</button></div></div></div></div>
+                     <div class="col product-item" data-id="1" data-price="5571" data-category="Fantasy" data-title="The Lord of the Rings" data-author="J.R.R. Tolkien" data-img="https://m.media-amazon.com/images/I/71jLBXtWJWL._AC_UF1000,1000_QL80_.jpg">
+    <div class="card product-card">
+        <button class="wishlist-btn" title="Add to Wishlist"><i class="bi bi-heart"></i></button>
+        <img src="https://m.media-amazon.com/images/I/71jLBXtWJWL._AC_UF1000,1000_QL80_.jpg" class="card-img-top" alt="The Lord of the Rings">
+        <div class="card-body text-center d-flex flex-column">
+            <h5 class="card-title">The Lord of the Rings</h5>
+            <p class="card-text text-muted mb-3">J.R.R. Tolkien</p>
+            <div class="mt-auto price-actions">
+                <p class="price">₹5,571</p>
+                <button class="btn btn-warning w-100 add-to-cart-btn">Add to Cart</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col product-item" data-id="2" data-price="6993" data-category="Fiction" data-title="One Golden Key" data-author="Herman Melville" data-img="https://m.media-amazon.com/images/I/719z3YgSctL._SY466_.jpg">
+    <div class="card product-card">
+        <button class="wishlist-btn" title="Add to Wishlist"><i class="bi bi-heart"></i></button>
+        <img src="https://m.media-amazon.com/images/I/719z3YgSctL._SY466_.jpg" class="card-img-top" alt="One Golden Key">
+        <div class="card-body text-center d-flex flex-column">
+            <h5 class="card-title">One Golden Key</h5>
+            <p class="card-text text-muted mb-3">Herman Melville</p>
+            <div class="mt-auto price-actions">
+                <p class="price">₹6,993</p>
+                <button class="btn btn-warning w-100 add-to-cart-btn">Add to Cart</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col product-item" data-id="3" data-price="1806" data-category="Mystery" data-title="Pride and Prejudice" data-author="Jane Austen" data-img="https://m.media-amazon.com/images/I/71Q1tPupKjL._AC_UF1000,1000_QL80_.jpg">
+    <div class="card product-card">
+        <button class="wishlist-btn" title="Add to Wishlist"><i class="bi bi-heart"></i></button>
+        <img src="https://m.media-amazon.com/images/I/71Q1tPupKjL._AC_UF1000,1000_QL80_.jpg" class="card-img-top" alt="Pride and Prejudice">
+        <div class="card-body text-center d-flex flex-column">
+            <h5 class="card-title">Pride and Prejudice</h5>
+            <p class="card-text text-muted mb-3">Jane Austen</p>
+            <div class="mt-auto price-actions">
+                <p class="price">₹1,806</p>
+                <button class="btn btn-warning w-100 add-to-cart-btn">Add to Cart</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col product-item" data-id="4" data-price="4550" data-category="Fiction" data-title="The Catcher in the Rye" data-author="J. D. Salinger" data-img="https://m.media-amazon.com/images/I/8125BDg3l0L._AC_UF1000,1000_QL80_.jpg">
+    <div class="card product-card">
+        <button class="wishlist-btn" title="Add to Wishlist"><i class="bi bi-heart"></i></button>
+        <img src="https://m.media-amazon.com/images/I/51TI+w56qFL._SY445_SX342_.jpg" class="card-img-top" alt="The Catcher in the Rye">
+        <div class="card-body text-center d-flex flex-column">
+            <h5 class="card-title">The Catcher in the Rye</h5>
+            <p class="card-text text-muted mb-3">J. D. Salinger</p>
+            <div class="mt-auto price-actions">
+                <p class="price">₹4,550</p>
+                <button class="btn btn-warning w-100 add-to-cart-btn">Add to Cart</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col product-item" data-id="5" data-price="3500" data-category="Sci-Fi" data-title="Dune" data-author="Frank Herbert" data-img="https://m.media-amazon.com/images/I/81ym3QUd3KL._AC_UF1000,1000_QL80_.jpg">
+    <div class="card product-card">
+        <button class="wishlist-btn" title="Add to Wishlist"><i class="bi bi-heart"></i></button>
+        <img src="https://m.media-amazon.com/images/I/81ym3QUd3KL._AC_UF1000,1000_QL80_.jpg" class="card-img-top" alt="Dune">
+        <div class="card-body text-center d-flex flex-column">
+            <h5 class="card-title">Dune</h5>
+            <p class="card-text text-muted mb-3">Frank Herbert</p>
+            <div class="mt-auto price-actions">
+                <p class="price">₹3,500</p>
+                <button class="btn btn-warning w-100 add-to-cart-btn">Add to Cart</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col product-item" data-id="6" data-price="2800" data-category="Thriller" data-title="The Silent Patient" data-author="Alex Michaelides" data-img="https://m.media-amazon.com/images/I/91p5b0UvG-L._AC_UF1000,1000_QL80_.jpg">
+    <div class="card product-card">
+        <button class="wishlist-btn" title="Add to Wishlist"><i class="bi bi-heart"></i></button>
+        <img src="https://m.media-amazon.com/images/I/41SyFfp9DkL._SY445_SX342_.jpg" class="card-img-top" alt="The Silent Patient">
+        <div class="card-body text-center d-flex flex-column">
+            <h5 class="card-title">The Silent Patient</h5>
+            <p class="card-text text-muted mb-3">Alex Michaelides</p>
+            <div class="mt-auto price-actions">
+                <p class="price">₹2,800</p>
+                <button class="btn btn-warning w-100 add-to-cart-btn">Add to Cart</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col product-item" data-id="8" data-price="4800" data-category="History" data-title="Sapiens: A Brief History" data-author="Yuval Noah Harari" data-img="https://m.media-amazon.com/images/I/713jIoMO3UL._AC_UF1000,1000_QL80_.jpg">
+    <div class="card product-card">
+        <button class="wishlist-btn" title="Add to Wishlist"><i class="bi bi-heart"></i></button>
+        <img src="https://m.media-amazon.com/images/I/713jIoMO3UL._AC_UF1000,1000_QL80_.jpg" class="card-img-top" alt="Sapiens">
+        <div class="card-body text-center d-flex flex-column">
+            <h5 class="card-title">Sapiens: A Brief History</h5>
+            <p class="card-text text-muted mb-3">Yuval Noah Harari</p>
+            <div class="mt-auto price-actions">
+                <p class="price">₹4,800</p>
+                <button class="btn btn-warning w-100 add-to-cart-btn">Add to Cart</button>
+            </div>
+        </div>
+    </div>
+</div>    
                 </div>
             </section>
         </div>
     </main>
-
+ 
     <!-- Toast Container -->
     <div class="toast-container position-fixed bottom-0 end-0 p-3">
         <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
@@ -340,7 +421,7 @@
                 <div class="col-lg-2 col-md-6 mb-4">
                     <h5>Quick Links</h5>
                     <ul class="list-unstyled">
-                        <li><a href="#">Home</a></li>
+                        <li><a href="homepage.html">Home</a></li>
                         <li><a href="shoppage.html">Shop</a></li>
                         <li><a href="#">About Us</a></li>
                         <li><a href="#">Contact</a></li>
@@ -350,7 +431,7 @@
                     <h5>Contact Us</h5>
                     <ul class="list-unstyled text-white-50">
                         <li><i class="bi bi-geo-alt-fill me-2"></i>123 Book Lane, Readville</li>
-                        <li><i class="bi bi-telephone-fill me-2"></i>(123) 456-7890</li>
+                        <li><i class="bi bi-telephone-fill me-2"></i>(+91)9080751236</li>
                         <li><i class="bi bi-envelope-fill me-2"></i>support@bookory.com</li>
                     </ul>
                 </div>
@@ -375,198 +456,198 @@
     <div class="footer-bottom text-center text-secondary">
         <p class="mb-0">&copy; 2025 Bookory. All Rights Reserved.</p>
     </div>
-    
+   
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
-    <script>
-        $(document).ready(function(){
-            const toastEl = document.getElementById('liveToast');
-            const toast = new bootstrap.Toast(toastEl);
-            const productGrid = $('#product-grid');
-
-            // --- Badge and Wishlist State Update --- //
-            function updateBadge(badgeId, storageKey) {
-                const items = JSON.parse(localStorage.getItem(storageKey)) || [];
-                const badge = $(badgeId);
-                if (items.length > 0) {
-                    badge.text(items.length).removeClass('d-none');
-                } else {
-                    badge.addClass('d-none');
-                }
+ 
+   <script>
+    $(document).ready(function(){
+        const toastEl = document.getElementById('liveToast');
+        const toast = new bootstrap.Toast(toastEl);
+        const productGrid = $('#product-grid');
+       
+        // --- FIX: Store all original product items on page load --- //
+        const allProductItems = productGrid.children('.product-item').get();
+ 
+        // --- Badge and Wishlist State Update --- //
+        function updateBadge(badgeId, storageKey) {
+            const items = JSON.parse(localStorage.getItem(storageKey)) || [];
+            const badge = $(badgeId);
+            if (items.length > 0) {
+                badge.text(items.length).removeClass('d-none');
+            } else {
+                badge.addClass('d-none');
             }
-
-            function updateWishlistIcons() {
-                const wishlist = JSON.parse(localStorage.getItem('bookoryWishlist')) || [];
-                const wishlistIds = wishlist.map(item => item.id);
-                
-                $('.wishlist-btn').each(function() {
-                    const productId = $(this).closest('.product-item').data('id');
-                    if (wishlistIds.includes(productId)) {
-                        $(this).addClass('active').find('i').removeClass('bi-heart').addClass('bi-heart-fill');
-                    } else {
-                         $(this).removeClass('active').find('i').removeClass('bi-heart-fill').addClass('bi-heart');
-                    }
-                });
-            }
-            
-            // --- Login State Management --- //
-            function updateLoginState() {
-                const user = localStorage.getItem('bookoryUser');
-                if (user) {
-                    $('#login-li').addClass('d-none');
-                    $('#user-info, #logout-li').removeClass('d-none');
-                } else {
-                    $('#login-li').removeClass('d-none');
-                    $('#user-info, #logout-li').addClass('d-none');
-                }
-            }
-
-            $('#login-btn').on('click', function(e) {
-                e.preventDefault();
-                localStorage.setItem('bookoryUser', JSON.stringify({ name: 'Guest User' }));
-                updateLoginState();
-            });
-
-            $('#logout-btn').on('click', function(e) {
-                e.preventDefault();
-                localStorage.removeItem('bookoryUser');
-                updateLoginState();
-            });
-
-            // --- Unified Product Filtering and Sorting --- //
-            function updateProductDisplay() {
-                const maxPrice = $('#priceRange').val();
-                const selectedCategory = $('.category-filter .list-group-item.active').data('category');
-                const searchTerm = $('#search-input').val().toLowerCase().trim();
-                const sortBy = $('#sort-by').val();
-
-                const allItems = productGrid.children('.product-item').get();
-                
-                let filteredItems = allItems.filter(function(item) {
-                    const product = $(item);
-                    const priceMatch = parseInt(product.data('price')) <= parseInt(maxPrice);
-                    const categoryMatch = (selectedCategory === 'All' || product.data('category') === selectedCategory);
-                    const productTitle = product.data('title').toLowerCase();
-                    const productAuthor = product.data('author').toLowerCase();
-                    const searchMatch = (searchTerm === '' || productTitle.includes(searchTerm) || productAuthor.includes(searchTerm));
-                    return priceMatch && categoryMatch && searchMatch;
-                });
-
-                if (sortBy === 'price-asc') {
-                    filteredItems.sort((a, b) => $(a).data('price') - $(b).data('price'));
-                } else if (sortBy === 'price-desc') {
-                    filteredItems.sort((a, b) => $(b).data('price') - $(a).data('price'));
-                } else if (sortBy === 'popularity') {
-                    filteredItems.sort((a, b) => $(a).data('id') - $(b).data('id'));
-                }
-
-                productGrid.empty(); // Clear the grid before re-populating
-                filteredItems.forEach(item => productGrid.append(item));
-                
-                $('#results-count').text(`Showing ${filteredItems.length} of ${allItems.length} results`);
-            }
-
-            // --- View Toggle Logic --- //
-            function setView(view) {
-                if (view === 'list') {
-                    productGrid.addClass('list-view').removeClass('row-cols-1 row-cols-md-2 row-cols-xl-4');
-                    $('#list-view-btn').addClass('active');
-                    $('#grid-view-btn').removeClass('active');
-                } else { // 'grid' is the default
-                    productGrid.removeClass('list-view').addClass('row-cols-1 row-cols-md-2 row-cols-xl-4');
-                    $('#grid-view-btn').addClass('active');
-                    $('#list-view-btn').removeClass('active');
-                }
-                localStorage.setItem('bookoryView', view);
-            }
-
-            $('#grid-view-btn').on('click', () => setView('grid'));
-            $('#list-view-btn').on('click', () => setView('list'));
-
-
-            // --- Event Handlers for Actions --- //
-            productGrid.on('click', '.add-to-cart-btn', function() {
-                const productCard = $(this).closest('.product-item');
-                const product = {
-                    id: productCard.data('id'),
-                    title: productCard.data('title'),
-                    price: productCard.data('price'),
-                    img: productCard.data('img'),
-                    quantity: 1
-                };
-
-                let cart = JSON.parse(localStorage.getItem('bookoryCart')) || [];
-                const existingProduct = cart.find(item => item.id === product.id);
-
-                if (existingProduct) {
-                    existingProduct.quantity++;
-                } else {
-                    cart.push(product);
-                }
-
-                localStorage.setItem('bookoryCart', JSON.stringify(cart));
-                updateBadge('#cart-badge', 'bookoryCart');
-                $('#liveToast .toast-body').text(`"${product.title}" was added to your cart.`);
-                toast.show();
-            });
-
-            productGrid.on('click', '.wishlist-btn', function() {
-                const productCard = $(this).closest('.product-item');
-                const product = {
-                    id: productCard.data('id'),
-                    title: productCard.data('title'),
-                    price: productCard.data('price'),
-                    img: productCard.data('img')
-                };
-                
-                let wishlist = JSON.parse(localStorage.getItem('bookoryWishlist')) || [];
-                const existingIndex = wishlist.findIndex(item => item.id === product.id);
-
-                if (existingIndex > -1) {
-                    wishlist.splice(existingIndex, 1);
-                    $(this).removeClass('active').find('i').removeClass('bi-heart-fill').addClass('bi-heart');
-                    $('#liveToast .toast-body').text(`"${product.title}" was removed from your wishlist.`);
-                } else {
-                    wishlist.push(product);
+        }
+ 
+        function updateWishlistIcons() {
+            const wishlist = JSON.parse(localStorage.getItem('bookoryWishlist')) || [];
+            const wishlistIds = wishlist.map(item => item.id);
+           
+            $('.wishlist-btn').each(function() {
+                const productId = $(this).closest('.product-item').data('id');
+                if (wishlistIds.includes(productId)) {
                     $(this).addClass('active').find('i').removeClass('bi-heart').addClass('bi-heart-fill');
-                    $('#liveToast .toast-body').text(`"${product.title}" was added to your wishlist.`);
+                } else {
+                    $(this).removeClass('active').find('i').removeClass('bi-heart-fill').addClass('bi-heart');
                 }
-
-                localStorage.setItem('bookoryWishlist', JSON.stringify(wishlist));
-                updateBadge('#wishlist-badge', 'bookoryWishlist');
-                toast.show();
             });
-            
-            // --- Event Handlers for Filters and Sorting --- //
-            $('#search-input').on('keyup', updateProductDisplay);
-
-            $('#priceRange').on('input', function() {
-                let price = $(this).val();
-                let formattedPrice = new Intl.NumberFormat('en-IN').format(price);
-                $('#price-value').text('₹' + formattedPrice);
-                updateProductDisplay();
-            });
-
-            $('.category-filter .list-group-item').on('click', function(e) {
-                e.preventDefault();
-                $('.category-filter .list-group-item').removeClass('active');
-                $(this).addClass('active');
-                updateProductDisplay();
-            });
-
-            $('#sort-by').on('change', updateProductDisplay);
-            
-            // --- Initial setup on page load --- //
-            const savedView = localStorage.getItem('bookoryView') || 'grid';
-            setView(savedView);
+        }
+       
+        // --- Login State Management --- //
+        function updateLoginState() {
+            const user = localStorage.getItem('bookoryUser');
+            if (user) {
+                $('#login-li').addClass('d-none');
+                $('#user-info, #logout-li').removeClass('d-none');
+            } else {
+                $('#login-li').removeClass('d-none');
+                $('#user-info, #logout-li').addClass('d-none');
+            }
+        }
+ 
+        $('#login-btn').on('click', function(e) {
+            e.preventDefault();
+            localStorage.setItem('bookoryUser', JSON.stringify({ name: 'Guest User' }));
             updateLoginState();
+        });
+ 
+        $('#logout-btn').on('click', function(e) {
+            e.preventDefault();
+            localStorage.removeItem('bookoryUser');
+            updateLoginState();
+        });
+ 
+        // --- Unified Product Filtering and Sorting --- //
+        function updateProductDisplay() {
+            const maxPrice = $('#priceRange').val();
+            const selectedCategory = $('.category-filter .list-group-item.active').data('category');
+            const searchTerm = $('#search-input').val().toLowerCase().trim();
+            const sortBy = $('#sort-by').val();
+ 
+            // --- FIX: Use the master list of all items for filtering --- //
+            let filteredItems = allProductItems.filter(function(item) {
+                const product = $(item);
+                const priceMatch = parseInt(product.data('price')) <= parseInt(maxPrice);
+                const categoryMatch = (selectedCategory === 'All' || product.data('category') === selectedCategory);
+                const productTitle = product.data('title').toLowerCase();
+                const productAuthor = product.data('author').toLowerCase();
+                const searchMatch = (searchTerm === '' || productTitle.includes(searchTerm) || productAuthor.includes(searchTerm));
+                return priceMatch && categoryMatch && searchMatch;
+            });
+ 
+            if (sortBy === 'price-asc') {
+                filteredItems.sort((a, b) => $(a).data('price') - $(b).data('price'));
+            } else if (sortBy === 'price-desc') {
+                filteredItems.sort((a, b) => $(b).data('price') - $(a).data('price'));
+            } else if (sortBy === 'popularity') {
+                filteredItems.sort((a, b) => $(a).data('id') - $(b).data('id'));
+            }
+ 
+            productGrid.empty(); // Clear the grid before re-populating
+            filteredItems.forEach(item => productGrid.append(item));
+           
+            // --- FIX: Update the count based on the original total --- //
+            $('#results-count').text(`Showing ${filteredItems.length} of ${allProductItems.length} results`);
+        }
+ 
+        // --- View Toggle Logic --- //
+        function setView(view) {
+            if (view === 'list') {
+                productGrid.addClass('list-view').removeClass('row-cols-1 row-cols-md-2 row-cols-xl-4');
+                $('#list-view-btn').addClass('active');
+                $('#grid-view-btn').removeClass('active');
+            } else { // 'grid' is the default
+                productGrid.removeClass('list-view').addClass('row-cols-1 row-cols-md-2 row-cols-xl-4');
+                $('#grid-view-btn').addClass('active');
+                $('#list-view-btn').removeClass('active');
+            }
+            localStorage.setItem('bookoryView', view);
+        }
+ 
+        $('#grid-view-btn').on('click', () => setView('grid'));
+        $('#list-view-btn').on('click', () => setView('list'));
+ 
+ 
+        // --- Event Handlers for Actions --- //
+        productGrid.on('click', '.add-to-cart-btn', function() {
+            const productCard = $(this).closest('.product-item');
+            const product = {
+                id: productCard.data('id'),
+                title: productCard.data('title'),
+                price: productCard.data('price'),
+                img: productCard.data('img'),
+                quantity: 1
+            };
+ 
+            let cart = JSON.parse(localStorage.getItem('bookoryCart')) || [];
+            const existingProduct = cart.find(item => item.id === product.id);
+ 
+            if (existingProduct) {
+                existingProduct.quantity++;
+            } else {
+                cart.push(product);
+            }
+ 
+            localStorage.setItem('bookoryCart', JSON.stringify(cart));
             updateBadge('#cart-badge', 'bookoryCart');
+            $('#liveToast .toast-body').text(`"${product.title}" was added to your cart.`);
+            toast.show();
+        });
+ 
+        productGrid.on('click', '.wishlist-btn', function() {
+            const productCard = $(this).closest('.product-item');
+            const product = {
+                id: productCard.data('id'),
+                title: productCard.data('title'),
+                price: productCard.data('price'),
+                img: productCard.data('img')
+            };
+           
+            let wishlist = JSON.parse(localStorage.getItem('bookoryWishlist')) || [];
+            const existingIndex = wishlist.findIndex(item => item.id === product.id);
+ 
+            if (existingIndex > -1) {
+                wishlist.splice(existingIndex, 1);
+                $(this).removeClass('active').find('i').removeClass('bi-heart-fill').addClass('bi-heart');
+                $('#liveToast .toast-body').text(`"${product.title}" was removed from your wishlist.`);
+            } else {
+                wishlist.push(product);
+                $(this).addClass('active').find('i').removeClass('bi-heart').addClass('bi-heart-fill');
+                $('#liveToast .toast-body').text(`"${product.title}" was added to your wishlist.`);
+            }
+ 
+            localStorage.setItem('bookoryWishlist', JSON.stringify(wishlist));
             updateBadge('#wishlist-badge', 'bookoryWishlist');
-            updateWishlistIcons();
+            toast.show();
+        });
+       
+        // --- Event Handlers for Filters and Sorting --- //
+        $('#search-input').on('keyup', updateProductDisplay);
+ 
+        $('#priceRange').on('input', function() {
+            let price = $(this).val();
+            let formattedPrice = new Intl.NumberFormat('en-IN').format(price);
+            $('#price-value').text('₹' + formattedPrice);
             updateProductDisplay();
         });
-    </script>
-
-</body>
-</html>
+ 
+        $('.category-filter .list-group-item').on('click', function(e) {
+            e.preventDefault();
+            $('.category-filter .list-group-item').removeClass('active');
+            $(this).addClass('active');
+            updateProductDisplay();
+        });
+ 
+        $('#sort-by').on('change', updateProductDisplay);
+       
+        // --- Initial setup on page load --- //
+        const savedView = localStorage.getItem('bookoryView') || 'grid';
+        setView(savedView);
+        updateLoginState();
+        updateBadge('#cart-badge', 'bookoryCart');
+        updateBadge('#wishlist-badge', 'bookoryWishlist');
+        updateWishlistIcons();
+        updateProductDisplay();
+    });
+</script>
