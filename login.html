@@ -53,7 +53,7 @@
             padding-left: 0.25rem;
             text-align: left; /* Aligns text to the left */
         }
-        /* --- NEW: STYLES FOR PASSWORD TOGGLE --- */
+        /* --- STYLES FOR PASSWORD TOGGLE --- */
         .form-floating .form-control {
             /* Add padding to the right of the input to make space for the icon */
             padding-right: 3rem; 
@@ -94,14 +94,17 @@
                         <input type="password" class="form-control" id="loginPassword" placeholder="Password" required>
                         <label for="loginPassword">Password</label>
                         <!-- The visibility toggle icon -->
-
+                        <i class="bi bi-eye-slash" id="togglePassword"></i>
                     </div>
                     <div id="loginPasswordError" class="error-message"></div>
                 </div>
                 <div class="d-grid mb-3">
                     <button type="submit" class="btn btn-primary btn-lg">Sign In</button>
                 </div>
+                
                 <p class="text-center text-muted">New to Bookory? <a href="registrationpage.html" style="color: var(--primary-color);">Create an account</a></p>
+                <!-- FORGOT PASSWORD LINK ADDED HERE -->
+                <p class="text-center"><a href="#" class="text-muted small">Forgot Password?</a></p>
             </form>
         </div>
     </div>
@@ -109,7 +112,7 @@
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script>
         $(document).ready(function() {
-            // --- NEW: PASSWORD TOGGLE LOGIC ---
+            // --- PASSWORD TOGGLE LOGIC ---
             $("#togglePassword").click(function() {
                 // Select the password input field
                 const passwordInput = $("#loginPassword");
@@ -118,7 +121,7 @@
                 // Change the input type
                 passwordInput.attr("type", type);
                 // Toggle the icon class between eye and eye-slash
-                $(this).toggleClass("bi-eye bi-eye-slash");
+                $(this).toggleClass("bi-eye-slash bi-eye");
             });
 
             // --- FORM SUBMISSION LOGIC ---
@@ -160,6 +163,7 @@
                         window.location.href = 'admindashboard.html';
                     } else {
                         const userProfile = JSON.parse(localStorage.getItem('userProfile'));
+                        // Note: In a real app, you would hash and compare the password securely.
                         if (userProfile && userProfile.email === email) {
                             sessionStorage.setItem('isLoggedIn', 'true');
                             sessionStorage.removeItem('isAdmin');
@@ -175,3 +179,4 @@
         });
     </script>
 </body>
+</html>

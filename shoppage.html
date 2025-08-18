@@ -545,7 +545,8 @@
             }
  
             productGrid.empty(); // Clear the grid before re-populating
-            filteredItems.forEach(item => productGrid.append(item));
+            if(searchTerm == "") allProductItems.forEach(item => productGrid.append(item));
+            else filteredItems.forEach(item => productGrid.append(item));
            
             // --- FIX: Update the count based on the original total --- //
             $('#results-count').text(`Showing ${filteredItems.length} of ${allProductItems.length} results`);
